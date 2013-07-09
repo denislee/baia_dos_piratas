@@ -1,0 +1,20 @@
+{% load staticfiles %}
+
+<html>
+<head>
+	<title>baia dos piratas</title>
+	<link rel="stylesheet" type="text/css" href="{% static "css/master.css" %}">
+	{% block head %}
+	{% endblock head %}
+</head>
+<body>
+	<div id="content">
+		<div id="header">
+			<div id="site-logo">bdp</div>
+			<div id="site-title"><h1>main</h1></div>
+		</div>
+		{% block content %}
+		{% endblock content %}
+	</div>
+</body>
+</html>

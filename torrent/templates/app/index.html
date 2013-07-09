@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load story_extras %}
+
+{% block head %}
+	<script src="{{ STATIC_URL }}js/jquery.min.js" type="text/javascript"></script>	
+	<script src="{{ STATIC_URL }}js/vote.js" type="text/javascript"></script>
+{% endblock head %}
+
+{% block content %}
+<ol>
+	{% for story in stories %}
+		<li>
+			<p class="story-title">
+				{% if user.is_authenticated and story not in liked_stories %}
+					<a href="{% url 'vote' %}" id="story-vote-{{ story.id }}" class="vote"><img src="{{ STATIC_URL }}images/arrow.gif"></a>
+					<a href="{{ story.url }}" id="story-title-{{ story.id }}">{{ story.title }}</a> <span class="domain">({{ story.domain }})</p>	
+				{% else %}
+					<a href="{{ story.url }}" style="margin-left: 15px;">{{ story.title }}</a> <span class="domain">({{ story.domain }})</p>
+				{% endif %}
+
+
+			<p class="story-info">
+				{{ story.points }} points by {{ story.moderator.username }} {{ story.created_at|age }}
+			</p>
+		</li>
+	{% endfor %}
+</ol>
+{% endblock content %}

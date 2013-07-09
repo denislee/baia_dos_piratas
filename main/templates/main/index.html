@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if form.errors %}
+{% endif %}
+
+<form method="post" action="{% url 'main' %}">
+{% csrf_token %}
+<p>
+	<input type="search" name="q" placeholder="Search here..." value="">
+</p>
+<input type="submit" value="procurar" />
+{# <input type="hidden" name="next" value="{{ next }}" /> #}
+</form>
+
+{% endblock %}
