@@ -1,4 +1,8 @@
 import datetime
+import os
+import sys
+import urllib2
+# import requests
 
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
@@ -8,13 +12,15 @@ from django.utils.timezone import utc
 # from stories.models import Story
 # from stories.forms import StoryForm
 
+PIRATEBAY_URL = 'http://piratebay.se'
+
 def index(request):
 	if request.method == 'POST':
 		if request.POST.get('q') == '':
 			return HttpResponseRedirect('/')
-
-		# faz a requisicao para o piratebay aqui
-
+		response = urllib2.urlopen(PIRATEBAY_URL)
+		# response = requests.get(PIRATEBAY_URL)
+		return render(request, 'main/index.html', {'response': response.read() })
 	else:
 		return render(request, 'main/index.html')
 
