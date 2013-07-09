@@ -13,6 +13,16 @@
 <input type="submit" value="procurar" />
 {# <input type="hidden" name="next" value="{{ next }}" /> #}
 </form>
+{% for torrent in torrents %}
+	{% if torrent %}
+		<br/> ------------------ <br/>
+		{{ torrent.0 }}	
+		{{ torrent.1 }}	
+		{{ torrent.2 }}	
+		{{ torrent.3 }}	
+		{{ torrent.4 }}	
+		{{ torrent.5 }}	
+	{% endif %}
+{% endfor %}
 
-{{ response }}
 {% endblock %}
