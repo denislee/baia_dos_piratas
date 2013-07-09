@@ -1,16 +1,17 @@
 {% extends "base.html" %}
-{% load staticfiles %}
+
 {% block content %}
 
+{% if form.errors %}
+{% endif %}
+
 <p class="lead">
-	<form method="post" action="{% url 'main' %}" class="well form-search" id="searchForm">
+	<form method="post" action="{% url 'opensubtitles' %}" class="well form-search">
 		{% csrf_token %}
 		<input type="text" class="input-medium search-query span6" name="q" value="{{ q }}">
 		<button type="submit" class="btn">procurar</button>
 	</form>
 </p>
-
-<img src="{% static 'img/loading.gif' %}" style="display:none;" id="loading">
 
 {% if torrents %}
 <p>
@@ -44,7 +45,6 @@
 	</tbody>
 	</table>
 </p>
-{% else %}
 
 {% endif %}
 {% endblock %}

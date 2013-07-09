@@ -8,23 +8,18 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.utils.timezone import utc
 
-# from django.shortcuts import render, get_object_or_404
-# from django.http import HttpResponse, HttpResponseRedirect
-# from django.contrib.auth.decorators import login_required
-
-# from stories.models import Story
-# from stories.forms import StoryForm
-
 PIRATEBAY_URL = 'http://piratebay.se'
 SEARCH_PATERN = '/search/%s/0/7/0'
 
+def about(request):
+	return render(request, 'main/about.html')
+	
 def index(request):
 	if request.method == 'POST':
 		startApp = time.clock()
 		if request.POST.get('q') == '':
 			return HttpResponseRedirect('/')	
 		query = urllib.quote( request.POST.get('q') )
-		# htmlData = urllib2.urlopen(PIRATEBAY_URL+SEARCH_PATERN.replace('%s',query)).read()
 		htmlData = requests.get(PIRATEBAY_URL+SEARCH_PATERN.replace('%s',query)).text
 		tableData = trimTable(htmlData)
 		soup = BeautifulSoup(tableData)
@@ -59,6 +54,7 @@ def trimTorrentLink(htmlData):
 	print '[performance-trimTorrentLink] ' + str(stop - start)
 	return tableData
 
+
 def makeList(table):
 	start = time.clock()
 	result = []
@@ -82,45 +78,3 @@ def makeList(table):
 	stop = time.clock()
 	print '[performance-makeList] ' + str(stop - start)
 	return result
-
-# def getTorrentLink(url):
-# 	torrentURL = 'error'
-# 	htmlData = urllib2.urlopen(PIRATEBAY_URL+url).read()
-# 	print '[getTorrentLink] ' +PIRATEBAY_URL+url
-
-# 	start = time.clock()
-
-# 	# soup = BeautifulSoup(trimHTML('href="magnet:','Get this torrent">',htmlData))
-# 	# print 'get this torrent: ' + trimTorrentLink(htmlData)
-# 	# torrentURL = soup.find('a', title='Get this torrent').get('href')
-
-# 	stop = time.clock()
-# 	print '[performance-getTorrentLink] ' + str(stop - start)
-
-# 	return trimTorrentLink(htmlData) 
-
-# 	# print '[torrentURL] '+str(torrentURL)
-
-
-# @login_required
-# def story(request):
-# 	if request.method == 'POST':
-# 		form = StoryForm(request.POST)
-# 		if form.is_valid():
-# 			story =	form.save(commit=False)
-# 			story.moderator = request.user
-# 			story.save()
-# 			return HttpResponseRedirect('/')
-# 	else:
-# 		form = StoryForm()
-# 	return render(request, 'stories/story.html', {'form': form})
-
-# @login_required
-# def vote(request):
-# 	story = get_object_or_404(Story, pk=request.POST.get('story')) 
-# 	story.points += 1
-# 	story.save()
-# 	user = request.user
-# 	user.liked_stories.add(story)
-# 	user.save()
-# 	return HttpResponse()
