@@ -5,24 +5,45 @@
 {% if form.errors %}
 {% endif %}
 
-<form method="post" action="{% url 'main' %}">
-{% csrf_token %}
-<p>
-	<input type="search" name="q" placeholder="Search here..." value="">
+<p class="lead">
+	<form method="post" action="{% url 'main' %}" class="well form-search">
+		{% csrf_token %}
+		<input type="text" class="input-medium search-query span6" name="q" value="{{ q }}">
+		<button type="submit" class="btn">procurar</button>
+	</form>
 </p>
-<input type="submit" value="procurar" />
-{# <input type="hidden" name="next" value="{{ next }}" /> #}
-</form>
-{% for torrent in torrents %}
-	{% if torrent %}
-		<br/> ------------------ <br/>
-		{{ torrent.0 }}	
-		{{ torrent.1 }}	
-		{{ torrent.2 }}	
-		{{ torrent.3 }}	
-		{{ torrent.4 }}	
-		{{ torrent.5 }}	
-	{% endif %}
-{% endfor %}
 
+{% if torrents %}
+<p>
+	<div class="page-header">
+		<h1></h1>
+	</div>	
+	<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<td>tipo</td>
+			<td>nome</td>
+			<td class="span2">detalhes</td>
+			<td class="span2">torrent</td>
+			<td>s</td>
+			<td>l</td>
+		</tr>
+	</thead>
+	<tbody>
+		{% for torrent in torrents %}
+		<tr>
+			{% if torrent %}
+				<td>{{ torrent.0 }}</td>
+				<td>{{ torrent.1 }}</td>
+				<td>[ <a href="{{ torrent.2 }}">detalhes</a> ]</td>
+				<td>[ <a href="{{ torrent.3 }}">download</a> ]</td>
+				<td>{{ torrent.4 }}</td>
+				<td>{{ torrent.5 }}</td>
+			{% endif %}
+		</tr>
+		{% endfor %}
+	</tbody>
+	</table>
+</p>
+{% endif %}
 {% endblock %}
