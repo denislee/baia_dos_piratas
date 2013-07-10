@@ -6,7 +6,6 @@ from bs4 import BeautifulSoup
 
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from django.utils.timezone import utc
 
 PIRATEBAY_URL = 'http://piratebay.se'
 SEARCH_PATERN = '/search/%s/0/7/0'

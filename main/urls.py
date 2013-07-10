@@ -7,8 +7,4 @@ urlpatterns = patterns('',
 	url(r'^about/', 'main.views.about', name='about'),
 	url(r'^legendas/', 'opensubtitles.views.index', name='opensubtitles'),
 	url(r'', 'main.views.index', name='main'),
- 	# url(r'^admin/', include(admin.site.urls)),
-	# url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'auth/login.html'}, name='login'),
-	# url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}, name='logout'),
-	# url(r'', include('app.urls')),
 )

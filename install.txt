@@ -1,0 +1,22 @@
+This creates an Apache server with mod_wsgi 3.4 and Python 2.7 installed running Django 1.5.1
+
+The Django libraries are installed in the ~/webapps/<app_name>/lib/python2.7/django directory.
+
+The front-end web server proxies incoming requests to the Apache server listening on an unprivileged port.
+
+A cron job is created to restart the Apache server every 20 minutes if it is not already running.
+
+To restart Apache, run: ~/webapps/<app_name>/apache2/bin/restart
+To start Apache, run: ~/webapps/<app_name>/apache2/bin/start
+To stop Apache, run: ~/webapps/<app_name>/apache2/bin/stop
+
+Django documentation is available at: http://docs.webfaction.com/software/django/index.html
+Python documentation is available at: http://docs.webfaction.com/software/python.html
+
+
+
+PYTHONPATH=/home/denislee/webapps/baiadospiratas/lib/python2.7/ easy_install --install-dir=/home/denislee/webapps/baiadospiratas/lib/python2.7 --script-dir=$HOME/webapps/baiadospiratas/bin requests
+
+
+
+PYTHONPATH=$HOME/webapps/baiadospiratas/lib/python2.7 python2.7 setup.py install --install-lib=$HOME/webapps/baiadospiratas/lib/python2.7 --install-scripts=$HOME/webapps/baiadospiratas/bin --install-data=$HOME/webapps/baiadospiratas/lib/python2.7
