@@ -12,8 +12,9 @@ $('#searchForm').submit(function(e) {
 
 	} else {
 
+		alertMsg.text('');
 		loading.css('display', 'initial');
 
 	}
-	
+
 });
