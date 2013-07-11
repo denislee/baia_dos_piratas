@@ -7,14 +7,15 @@ $('#searchForm').submit(function(e) {
 	if (q.val().length == 0) {
 
 		alertMsg.text('esquencedo de algo, amigo? :D');
-		q.css('border', '2px solid red');
+		q.css('border', '1px solid red');
 		e.preventDefault();
 
 	} else {
 
 		alertMsg.text('');
+		q.css('border', '1px solid #ccc');
 		loading.css('display', 'initial');
 
 	}
-
+	
 });
