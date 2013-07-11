@@ -17,7 +17,7 @@ def index(request):
 	if request.method == 'POST':
 		startApp = time.clock()
 		if request.POST.get('q') == '':
-			return HttpResponseRedirect('/')	
+			return render(request, 'main/index.html')
 		query = urllib.quote( request.POST.get('q') )
 		htmlData = requests.get(PIRATEBAY_URL+SEARCH_PATERN.replace('%s',query)).text
 		tableData = trimTable(htmlData)

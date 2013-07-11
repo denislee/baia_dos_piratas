@@ -9,7 +9,7 @@
 		<button type="submit" class="btn">procurar</button>
 	</form>
 </p>
-
+<div id="alertMsg"></div>
 <img src="{% static 'img/loading.gif' %}" style="display:none;" id="loading">
 
 {% if torrents %}
@@ -44,7 +44,5 @@
 	</tbody>
 	</table>
 </p>
-{% else %}
-
 {% endif %}
 {% endblock %}
