@@ -6,7 +6,7 @@ $('#searchForm').submit(function(e) {
 
 	if (q.val().length == 0) {
 
-		alertMsg.text('esquencedo de algo, amigo? :D');
+		alertMsg.text('esquecendo de algo, amigo? :D');
 		q.css('border', '1px solid red');
 		e.preventDefault();
 
