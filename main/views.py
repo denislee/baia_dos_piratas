@@ -9,53 +9,31 @@ from django.http import HttpResponseRedirect
 
 PIRATEBAY_URL = 'http://piratebay.se'
 SEARCH_PATERN = '/search/%s/0/7/0'
+TABLE_BEGIN = '<table id="searchResult">'
+TABLE_END = '</table>'
 
 def about(request):
 	return render(request, 'main/about.html')
 	
 def index(request):
-	if request.method == 'POST':
-		startApp = time.clock()
-		if request.POST.get('q') == '':
-			return render(request, 'main/index.html')
+	if request.method == 'POST' and request.POST.get('q') != '':
 		query = urllib.quote( request.POST.get('q') )
 		htmlData = requests.get(PIRATEBAY_URL+SEARCH_PATERN.replace('%s',query)).text
-		tableData = trimTable(htmlData)
+		tableData = trimTable(htmlData, TABLE_BEGIN, TABLE_END)
 		soup = BeautifulSoup(tableData)
 		torrents = makeList(soup)
-		stopApp = time.clock()
-		print '[performance-APP] ' + str(stopApp - startApp)
-		return render(request, 'main/index.html', {'torrents': torrents, 'q': request.POST.get('q')})
-	else:
-		return render(request, 'main/index.html')
+		return render(request, 'main/index.html', {'torrents': torrents, 'total': len(torrents), 'q': request.POST.get('q')})
+	return render(request, 'main/index.html')
 
 
-def trimTable(htmlData):
-	begin = '<table id="searchResult">'
-	end = '</table>' 
-	start = time.clock()
+def trimTable(htmlData, begin, end):
 	tableData = 'not found ):'
 	if (htmlData):
 		tableData = htmlData[htmlData.find(begin):htmlData.find(end)+len(end)]
-	stop = time.clock()
-	print '[performance-trimTable] ' + str(stop - start)
-	return tableData
-
-
-def trimTorrentLink(htmlData):
-	begin = 'href="magnet:'
-	end = 'Get this torrent">'
-	start = time.clock()
-	tableData = 'not found ):'
-	if (htmlData):
-		tableData = htmlData[htmlData.find(begin)+6:htmlData.find(end)-9]
-	stop = time.clock()
-	print '[performance-trimTorrentLink] ' + str(stop - start)
 	return tableData
 
 
 def makeList(table):
-	start = time.clock()
 	result = []
 	allrows = table.findAll('tr', limit=3)
 	for row in allrows:
@@ -74,6 +52,4 @@ def makeList(table):
 			if urlTag:
 				url = urlTag.get('href')
 				result[-1].append(url)
-	stop = time.clock()
-	print '[performance-makeList] ' + str(stop - start)
 	return result

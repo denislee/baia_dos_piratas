@@ -2,47 +2,51 @@
 {% load staticfiles %}
 {% block content %}
 
-<p class="lead">
-	<form method="post" action="{% url 'main' %}" class="well form-search" id="searchForm">
-		{% csrf_token %}
-		<input type="text" class="input-medium search-query span10" name="q" value="{{ q }}">
-		<button type="submit" class="btn">procurar</button>
-	</form>
-</p>
-<div id="alertMsg"></div>
-<img src="{% static 'img/loading.gif' %}" style="display:none;" id="loading">
+	<p class="lead">
+		<form method="post" action="{% url 'main' %}" class="well form-search" id="searchForm">
+			{% csrf_token %}
+			<input type="text" class="input-medium search-query span10" name="q" value="{{ q }}">
+			<button type="submit" class="btn">procurar</button>
+		</form>
+	</p>
+	<div id="alertMsg"></div>
+	<img src="{% static 'img/loading.gif' %}" style="display:none;" id="loading">
 
-{% if torrents %}
-<p>
-	<div class="page-header">
-		<h1></h1>
-	</div>	
-	<table class="table table-bordered table-striped">
-	<thead>
-		<tr>
-			<td>tipo</td>
-			<td>nome</td>
-			<td class="span2">detalhes</td>
-			<td class="span2">torrent</td>
-			<td>s</td>
-			<td>l</td>
-		</tr>
-	</thead>
-	<tbody>
-		{% for torrent in torrents %}
-		<tr>
-			{% if torrent %}
-				<td>{{ torrent.0 }}</td>
-				<td>{{ torrent.1 }}</td>
-				<td>[ <a href="{{ torrent.2 }}">detalhes</a> ]</td>
-				<td>[ <a href="{{ torrent.3 }}">download</a> ]</td>
-				<td>{{ torrent.4 }}</td>
-				<td>{{ torrent.5 }}</td>
-			{% endif %}
-		</tr>
-		{% endfor %}
-	</tbody>
-	</table>
-</p>
-{% endif %}
+	{% if torrents %}
+
+		<div class="page-header"></div>	
+		<table class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<td>tipo</td>
+				<td>nome</td>
+				<td class="span2">detalhes</td>
+				<td class="span2">torrent</td>
+				<td>s</td>
+				<td>l</td>
+			</tr>
+		</thead>
+		<tbody>
+			{% for torrent in torrents %}
+			<tr>
+				{% if torrent %}
+					<td>{{ torrent.0 }}</td>
+					<td>{{ torrent.1 }}</td>
+					<td>[ <a href="{{ torrent.2 }}">detalhes</a> ]</td>
+					<td>[ <a href="{{ torrent.3 }}">download</a> ]</td>
+					<td>{{ torrent.4 }}</td>
+					<td>{{ torrent.5 }}</td>
+				{% endif %}
+			</tr>
+			{% endfor %}
+		</tbody>
+		</table>
+
+	{% elif total == 0 %}
+
+		<div class="page-header"></div>	
+		xi marquinho. nem encontrei as paradinhas. ): mals.
+		
+	{% endif %}
+
 {% endblock %}
