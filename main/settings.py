@@ -148,7 +148,8 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
-ALLOWED_HOSTS = ['bdp.denislee.net', '*.denislee.net', 'localhost', '127.0.0.1',]
+ALLOWED_HOSTS = ['bdp.denislee.net', '*.denislee.net', 'localhost', '127.0.0.1', \
+    'web410.webfaction.com', 'localhost.localdomain']
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.gzip.GZipMiddleware',
