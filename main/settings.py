@@ -152,7 +152,7 @@ USE_X_FORWARDED_HOST = True
 
 ALLOWED_HOSTS = ['bdp.denislee.net', '*.denislee.net', 'web410.webfaction.com', \
     'localhost.localdomain', 'localhost', '127.0.0.1', '10.61.31.82', '108.168.242.154', \
-    ]
+    '0.0.0.0', ]
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.gzip.GZipMiddleware',
@@ -163,9 +163,12 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 
+    # 'webfaction.multipleProxyMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
+
 
 ROOT_URLCONF = 'main.urls'
 
@@ -185,10 +188,10 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
-    'pipeline',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     # 'torrent',
+    'pipeline',
     'opensubtitles',
 )
 
