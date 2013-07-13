@@ -2,7 +2,7 @@
 
 import os
 PROJECT_PATH = os.path.dirname(os.path.realpath(__file__))
-DEBUG = False 
+DEBUG = True 
 TEMPLATE_DEBUG = DEBUG
 
 LOGIN_URL = '/login/'
