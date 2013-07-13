@@ -2,7 +2,7 @@
 
 import os
 PROJECT_PATH = os.path.dirname(os.path.realpath(__file__))
-DEBUG = True 
+DEBUG = False 
 TEMPLATE_DEBUG = DEBUG
 
 LOGIN_URL = '/login/'
@@ -91,6 +91,7 @@ PIPELINE_VERSION = True
 PIPELINE_URL = '/static/'
 
 STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
+PIPELINE_STORAGE = 'pipeline.storage.PipelineFinderStorage'
 
 # PIPELINE_CSSMIN_BINARY = 'cssmin'
 # PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.cssmin.CSSMinCompressor'
@@ -122,8 +123,6 @@ PIPELINE_JS = {
         ),
         'output_filename': 'min.js',
     },
-
-
 }
 
 
@@ -149,12 +148,17 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+ALLOWED_HOSTS = ['bdp.denislee.net', '*.denislee.net', 'localhost', '127.0.0.1',]
+
 MIDDLEWARE_CLASSES = (
+    'django.middleware.gzip.GZipMiddleware',
+    'htmlmin.middleware.HtmlMinifyMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
