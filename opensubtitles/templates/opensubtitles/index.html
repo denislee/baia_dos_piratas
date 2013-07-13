@@ -10,7 +10,7 @@
 <p class="lead">
 	<form method="post" action="{% url 'opensubtitles' %}" class="well form-search">
 		{% csrf_token %}
-		<input type="text" class="input-medium search-query span10" name="q" value="{{ q }}">
+		<input id="search" type="text" class="input-medium search-query span10" name="q" value="{{ q }}">
 		<button type="submit" class="btn">procurar</button>
 	</form>
 </p>

@@ -1,7 +1,6 @@
 import urllib
 import requests
 import time 
-import re
 
 from bs4 import BeautifulSoup
 
@@ -9,22 +8,26 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.utils.timezone import utc
 
-OPENSUBTITLES_URL = 'http://www.opensubtitles.org/'
-OPENSUBTITLES_URL_MOVIES = 'http://www.opensubtitles.org/libs/suggest.php'
-OPENSUBTITLES_LANGUAGE = 'pob'
+# URL_MOVIES = 'http://www.opensubtitles.org/libs/suggest.php'
+# LANGUAGE = 'pob'
+MAIN_URL = 'http://www.opensubtitles.org/'
+MOVIE_QUERY = MAIN_URL + 'libs/suggest.php?format=json3&MovieName=%s&SubLanguageID=null'
 
 def index(request):
 	if request.method == 'POST' and request.POST.get('q') != '':
 		query = urllib.quote( request.POST.get('q') )
 		json = queryMovieSimple(query)
+		print 'json : ' + json
+		# print 'objeto py: ' + json.json()
 		return render(request, 'opensubtitles/index.html', { 'json': json, })
 	return render(request, 'opensubtitles/index.html')
 
 def queryMovieSimple(query):
-	json = requests.get( \
-		'http://www.opensubtitles.org/libs/suggest.php?format=json3&MovieName=' \
-		+ urllib.quote( query ) + \
-		'&SubLanguageID=null').text
+	json = requests.get(MOVIE_QUERY % urllib.quote( query )).text
+	# json = requests.get( \
+	# 	'http://www.opensubtitles.org/libs/suggest.php?format=json3&MovieName=' \
+	# 	+ urllib.quote( query ) + \
+	# 	'&SubLanguageID=null').text
 	return json
 
 # def getCookies(url):
