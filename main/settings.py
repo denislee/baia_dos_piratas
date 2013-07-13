@@ -86,6 +86,11 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
+# For pipeline :D
+STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
+PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.yuglify.YuglifyCompressor'
+PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.yuglify.YuglifyCompressor'
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'a44yucl0(4j6^@bj%%)1rw6p3p6tfdmp61u^2e^3_e_ryn)mp4'
 
@@ -124,6 +129,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
+    'pipeline',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     # 'torrent',
