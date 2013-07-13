@@ -1,4 +1,6 @@
-{% load staticfiles %}
+{% load static %}
+{% load compressed %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,8 +12,7 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/jquery-ui-1.10.3.custom.css' %}" rel="stylesheet">
+    {% compressed_css 'base' %}
 
     <style>
       body {
@@ -63,10 +64,8 @@
     </div> <!-- /container -->
 
     <!-- Le javascript -->
-    <script src="{% static 'js/jquery.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/jquery-ui-1.10.3.custom.min.js' %}"></script>
-    <script src="{% static 'js/main.js' %}"></script>
+    {% compressed_js 'jquery' %}
+    {% compressed_js 'base' %}
 
   </body>
 </html>

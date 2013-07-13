@@ -2,8 +2,7 @@
 
 import os
 PROJECT_PATH = os.path.dirname(os.path.realpath(__file__))
-
-DEBUG = True
+DEBUG = True 
 TEMPLATE_DEBUG = DEBUG
 
 LOGIN_URL = '/login/'
@@ -87,9 +86,58 @@ STATICFILES_FINDERS = (
 )
 
 # For pipeline :D
+PIPELINE = True
+PIPELINE_VERSION = True
+PIPELINE_URL = '/static/'
+
 STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
+
+# PIPELINE_CSSMIN_BINARY = 'cssmin'
+# PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.cssmin.CSSMinCompressor'
+# PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.slimit.SlimItCompressor'
+
 PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.yuglify.YuglifyCompressor'
 PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.yuglify.YuglifyCompressor'
+
+PIPELINE_CSS = {
+    'base': {
+        'source_filenames': (
+            'css/*',
+        ),
+        'output_filename': 'min.css',
+        'variant': 'datauri',
+    },
+}
+
+PIPELINE_JS = {
+    'jquery': {
+        'source_filenames': (
+            'js/jquery/*.js',
+        ),
+        'output_filename': 'jquery.js',
+    },
+    'base': {
+        'source_filenames': (
+            'js/*.js',
+        ),
+        'output_filename': 'min.js',
+    },
+
+
+}
+
+
+# PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.yuglify.YuglifyCompressor'
+# PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.yuglify.YuglifyCompressor'
+# PIPELINE_JS = {
+#     'base_scripts': {
+#         'source_filenames': (
+#           'js/main.js',
+#           'js/vote.js',
+#         ),
+#         'output_filename': '/js/min/all.js',
+#     }
+# }
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'a44yucl0(4j6^@bj%%)1rw6p3p6tfdmp61u^2e^3_e_ryn)mp4'

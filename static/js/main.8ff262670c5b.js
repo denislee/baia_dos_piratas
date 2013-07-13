@@ -1,8 +1,13 @@
-$('#searchForm').submit(function(e) {
 
-	var q = $('.search-query');
-	var loading = $('#loading'); 
-	var alertMsg = $('#alertMsg');
+
+var form = $('#searchForm'),
+    suggestCallBack;
+
+form.submit(function(e) {
+
+	var q = $('.search-query'),
+		loading = $('#loading'),
+		alertMsg = $('#alertMsg');
 
 	if (q.val().length == 0) {
 
@@ -20,8 +25,6 @@ $('#searchForm').submit(function(e) {
 	
 });
 
-
-var suggestCallBack; // global var for autocomplete jsonp
 
 $(document).ready(function () {
     $("#search").autocomplete({
