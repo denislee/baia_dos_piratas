@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Set environment variables
-APPNAME=uwsgi_server       # Name of the uWSGI Custom Application
-APPPORT=14071              # Assigned port for the uWSGI Custom Application
+APPNAME=baiadospiratas_uwgi       # Name of the uWSGI Custom Application
+APPPORT=26660              # Assigned port for the uWSGI Custom Application
 PYTHON=python2.7           # Django python version
 DJANGOAPP=baiadospiratas_test           # Django application name
 DJANGOPROJECT=baia_dos_piratas    # Django project name
