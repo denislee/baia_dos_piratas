@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.utils.timezone import utc
+from django.http import HttpRequest
 
 # URL_MOVIES = 'http://www.opensubtitles.org/libs/suggest.php'
 # LANGUAGE = 'pob'
@@ -18,8 +19,9 @@ def index(request):
 		query = urllib.quote( request.POST.get('q') )
 		json = queryMovieSimple(query)
 		print 'json : ' + json
+		host = str(HttpRequest.get_host())
 		# print 'objeto py: ' + json.json()
-		return render(request, 'opensubtitles/index.html', { 'json': json, })
+		return render(request, 'opensubtitles/index.html', { 'json': json, 'host_requested': host})
 	return render(request, 'opensubtitles/index.html')
 
 def queryMovieSimple(query):
