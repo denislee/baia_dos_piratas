@@ -2,9 +2,10 @@
 
 # Set environment variables
 APPNAME=baiadospiratas_uwgi       # Name of the uWSGI Custom Application
-APPPORT=26660              # Assigned port for the uWSGI Custom Application
+APPPORT=21510              # Assigned port for the uWSGI Custom Application
 PYTHON=python2.7           # Django python version
 DJANGOAPP=baiadospiratas_test           # Django application name
+DJANGOMAINAPP=main # Django application name
 DJANGOPROJECT=baia_dos_piratas    # Django project name
 
 mkdir -p $HOME/webapps/$APPNAME/{bin,nginx,src,tmp}
@@ -12,7 +13,7 @@ mkdir -p $HOME/webapps/$APPNAME/{bin,nginx,src,tmp}
 cd $HOME/webapps/$APPNAME/src
 #wget 'https://github.com/pagespeed/ngx_pagespeed/archive/release-1.5.27.3-beta.zip'
 cp $HOME/src/release-1.5.27.3-beta.zip .
-mv release-1.5.27.3-beta release-1.5.27.3-beta.zip
+# mv release-1.5.27.3-beta release-1.5.27.3-beta.zip
 unzip release-1.5.27.3-beta.zip
 cd ngx_pagespeed-release-1.5.27.3-beta
 # wget 'https://dl.google.com/dl/page-speed/psol/1.5.27.3.tar.gz'
@@ -103,6 +104,11 @@ http {
             include uwsgi_params;
             uwsgi_pass unix://${HOME}/webapps/${APPNAME}/uwsgi.sock;
 
+            uwsgi_param X-Real-IP $remote_addr;
+            uwsgi_param Host $http_host;
+
+            uwsgi_pass todoist_uwsgi;
+            
             location ~ "\.pagespeed\.([a-z]\.)?[a-z]{2}\.[^.]{10}\.[^.]+" { add_header "" ""; }
             location ~ "^/ngx_pagespeed_static/" { }
             location ~ "^/ngx_pagespeed_beacon$" { }
@@ -117,12 +123,12 @@ EOF
 cat << EOF > $HOME/webapps/$APPNAME/wsgi.py
 import sys, os
 
-sys.path = ['${HOME}/webapps/${DJANGOAPP}/${DJANGOPROJECT}/${DJANGOPROJECT}',
+sys.path = ['${HOME}/webapps/${DJANGOAPP}/${DJANGOPROJECT}/${DJANGOMAINAPP}',
             '${HOME}/webapps/${DJANGOAPP}/${DJANGOPROJECT}',
             '${HOME}/webapps/${DJANGOAPP}/lib/${PYTHON}',
            ] + sys.path
 
-os.environ['DJANGO_SETTINGS_MODULE'] = '${DJANGOPROJECT}.settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = '${DJANGOMAINAPP}.settings'
 
 import django.core.handlers.wsgi
 
@@ -175,3 +181,16 @@ sleep 5
 EOF
 
 chmod 755 $HOME/webapps/$APPNAME/bin/{start,stop,restart}
+
+# update.py
+cat << EOF > $HOME/webapps/$DJANGOAPP/update.py
+#!/bin/bash
+
+rm -rf baia_dos_piratas
+git clone https://github.com/denislee/baia_dos_piratas
+rm -rf ../baiadospiratas_static/*
+cp -R baia_dos_piratas/static/* ../baiadospiratas_static/
+
+EOF
+
+chmod +x $HOME/webapps/$DJANGOAPP/update.py

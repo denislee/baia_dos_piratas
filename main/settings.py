@@ -28,7 +28,12 @@ DATABASES = {
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+USE_X_FORWARDED_HOST = True
+
+ALLOWED_HOSTS = ['bdp.denislee.net', '.denislee.net', 'web410.webfaction.com', \
+    'localhost.localdomain', 'localhost', '127.0.0.1', '10.61.31.82', '108.168.242.154', \
+    '0.0.0.0', '.bdp.denislee.net', 'denislee.webfaction.com', '*']
+
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -147,12 +152,6 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
 )
-
-USE_X_FORWARDED_HOST = True
-
-ALLOWED_HOSTS = ['bdp.denislee.net', '.denislee.net', 'web410.webfaction.com', \
-    'localhost.localdomain', 'localhost', '127.0.0.1', '10.61.31.82', '108.168.242.154', \
-    '0.0.0.0', '.bdp.denislee.net', 'denislee.webfaction.com', '*']
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.gzip.GZipMiddleware',
