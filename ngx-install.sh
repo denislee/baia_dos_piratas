@@ -10,11 +10,13 @@ DJANGOPROJECT=baia_dos_piratas    # Django project name
 mkdir -p $HOME/webapps/$APPNAME/{bin,nginx,src,tmp}
 
 cd $HOME/webapps/$APPNAME/src
-wget 'https://github.com/pagespeed/ngx_pagespeed/archive/release-1.5.27.3-beta.zip'
+#wget 'https://github.com/pagespeed/ngx_pagespeed/archive/release-1.5.27.3-beta.zip'
+cp $HOME/src/release-1.5.27.3-beta.zip .
 mv release-1.5.27.3-beta release-1.5.27.3-beta.zip
 unzip release-1.5.27.3-beta.zip
 cd ngx_pagespeed-release-1.5.27.3-beta
-wget 'https://dl.google.com/dl/page-speed/psol/1.5.27.3.tar.gz'
+# wget 'https://dl.google.com/dl/page-speed/psol/1.5.27.3.tar.gz'
+cp $HOME/src/1.5.27.3.tar.gz .
 tar -xzf 1.5.27.3.tar.gz
 
 
@@ -23,7 +25,8 @@ tar -xzf 1.5.27.3.tar.gz
 # original: http://nginx.org/download/nginx-1.5.2.tar.gz
 ###########################################################
 cd $HOME/webapps/$APPNAME/src
-wget 'http://nginx.org/download/nginx-1.5.2.tar.gz'
+# wget 'http://nginx.org/download/nginx-1.5.2.tar.gz'
+cp $HOME/src/nginx-1.5.2.tar.gz .
 tar -xzf nginx-1.5.2.tar.gz
 cd nginx-1.5.2
 ./configure \
@@ -47,7 +50,8 @@ make && make install
 # original: http://projects.unbit.it/downloads/uwsgi-1.9.13.tar.gz
 ###########################################################
 cd $HOME/webapps/$APPNAME/src
-wget 'http://projects.unbit.it/downloads/uwsgi-1.9.13.tar.gz'
+# wget 'http://projects.unbit.it/downloads/uwsgi-1.9.13.tar.gz'
+cp $HOME/src/uwsgi-1.9.13.tar.gz .
 tar -xzf uwsgi-1.9.13.tar.gz
 cd uwsgi-1.9.13
 $PYTHON uwsgiconfig.py --build
