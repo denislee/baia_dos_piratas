@@ -2,10 +2,10 @@
 
 # Set environment variables
 APPNAME=baiadospiratas_uwgi       # Name of the uWSGI Custom Application
-APPPORT=21510              # Assigned port for the uWSGI Custom Application
-PYTHON=python2.7           # Django python version
-DJANGOAPP=baiadospiratas_test           # Django application name
-DJANGOMAINAPP=main # Django application name
+APPPORT=21510                     # Assigned port for the uWSGI Custom Application
+PYTHON=python2.7                  # Django python version
+DJANGOAPP=baiadospiratas          # Django application name
+DJANGOMAINAPP=main                # Django application name
 DJANGOPROJECT=baia_dos_piratas    # Django project name
 
 mkdir -p $HOME/webapps/$APPNAME/{bin,nginx,src,tmp}
@@ -99,16 +99,24 @@ http {
     server {
         listen 127.0.0.1:${APPPORT};
 
+        set ${my_host} ${host};
+
+        if (${host} ~ "\d+\.\d+\.\d+\.\d+") {
+            set ${my_host} "bdp.denislee.net";
+        }
+
         location / {
 
-            include uwsgi_params;
+            include uwsgi_param s;
+
             uwsgi_pass unix://${HOME}/webapps/${APPNAME}/uwsgi.sock;
-
-            uwsgi_param X-Real-IP $remote_addr;
-            uwsgi_param Host $http_host;
-
-            uwsgi_pass todoist_uwsgi;
             
+            uwsgi_param   X-Forwarded-For     ${proxy_add_x_forwarded_for};
+            uwsgi_param   X-Real-IP           ${remote_addr};
+            uwsgi_param   X-Forwarded-Host    ${host};
+            uwsgi_param   Host                ${host};
+            uwsgi_param   HTTP_HOST           ${my_host};
+
             location ~ "\.pagespeed\.([a-z]\.)?[a-z]{2}\.[^.]{10}\.[^.]+" { add_header "" ""; }
             location ~ "^/ngx_pagespeed_static/" { }
             location ~ "^/ngx_pagespeed_beacon$" { }
@@ -176,7 +184,7 @@ cat << EOF > $HOME/webapps/$APPNAME/bin/restart
 APPNAME=${APPNAME}
 
 \${HOME}/webapps/\${APPNAME}/bin/stop
-sleep 5
+sleep 2 
 \${HOME}/webapps/\${APPNAME}/bin/start
 EOF
 
@@ -194,3 +202,6 @@ cp -R baia_dos_piratas/static/* ../baiadospiratas_static/
 EOF
 
 chmod +x $HOME/webapps/$DJANGOAPP/update.py
+
+mkdir $HOME/webapps/$APPNAME/lib
+cp -R $HOME/src/python2.7 $HOME/webapps/$APPNAME/lib
