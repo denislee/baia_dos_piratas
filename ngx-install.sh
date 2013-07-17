@@ -125,7 +125,7 @@ http {
         location /ngx_pagespeed_message { allow 127.0.0.1; deny all; }
 
       }
-      
+
       #site_media - folder in uri for static files
       location /static/  {
         autoindex    off;
@@ -204,8 +204,6 @@ cat << EOF > $HOME/webapps/$DJANGOAPP/update.py
 
 rm -rf baia_dos_piratas
 git clone https://github.com/denislee/baia_dos_piratas
-rm -rf ../baiadospiratas_static/*
-cp -R baia_dos_piratas/static/* ../baiadospiratas_static/
 
 EOF
 

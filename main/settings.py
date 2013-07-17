@@ -154,7 +154,7 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'webfaction.middleware.webfaction.MultipleProxyMiddleware',
+    'webfaction.middleware.webfaction.WebFactionFixes',
     'django.middleware.gzip.GZipMiddleware',
     'htmlmin.middleware.HtmlMinifyMiddleware',
     'django.middleware.common.CommonMiddleware',
