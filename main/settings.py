@@ -28,7 +28,7 @@ DATABASES = {
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-USE_X_FORWARDED_HOST = True
+USE_X_FORWARDED_HOST = False
 
 ALLOWED_HOSTS = ['bdp.denislee.net', '.denislee.net', 'web410.webfaction.com', \
     'localhost.localdomain', 'localhost', '127.0.0.1', '10.61.31.82', '108.168.242.154', \
@@ -154,6 +154,7 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'webfaction.middleware.webfaction.MultipleProxyMiddleware',
     'django.middleware.gzip.GZipMiddleware',
     'htmlmin.middleware.HtmlMinifyMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -185,13 +186,12 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
-    'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
+    # 'django.contrib.admin',
     # 'django.contrib.admindocs',
     # 'torrent',
     'pipeline',
     'opensubtitles',
+    'webfaction',
 )
 
 # A sample logging configuration. The only tangible logging

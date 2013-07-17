@@ -1,4 +1,3 @@
-
 class MultipleProxyMiddleware(object):
     FORWARDED_FOR_FIELDS = [
         'HTTP_X_FORWARDED_FOR',

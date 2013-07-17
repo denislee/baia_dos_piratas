@@ -97,33 +97,41 @@ http {
     gzip_disable "MSIE [1-6]\.(?!.*SV1)";
 
     server {
-        listen 127.0.0.1:${APPPORT};
 
-        set ${my_host} ${host};
+      listen 127.0.0.1:${APPPORT};
 
-        if (${host} ~ "\d+\.\d+\.\d+\.\d+") {
-            set ${my_host} "bdp.denislee.net";
-        }
+      set $my_host $host;
 
-        location / {
+      if ($host ~ "\d+\.\d+\.\d+\.\d+") {
+          set $my_host "bdp.denislee.net";
+      }
 
-            include uwsgi_param s;
+      location / {
 
-            uwsgi_pass unix://${HOME}/webapps/${APPNAME}/uwsgi.sock;
-            
-            uwsgi_param   X-Forwarded-For     ${proxy_add_x_forwarded_for};
-            uwsgi_param   X-Real-IP           ${remote_addr};
-            uwsgi_param   X-Forwarded-Host    ${host};
-            uwsgi_param   Host                ${host};
-            uwsgi_param   HTTP_HOST           ${my_host};
+        include uwsgi_params;
 
-            location ~ "\.pagespeed\.([a-z]\.)?[a-z]{2}\.[^.]{10}\.[^.]+" { add_header "" ""; }
-            location ~ "^/ngx_pagespeed_static/" { }
-            location ~ "^/ngx_pagespeed_beacon$" { }
-            location /ngx_pagespeed_statistics { allow 127.0.0.1; deny all; }
-            location /ngx_pagespeed_message { allow 127.0.0.1; deny all; }
+        uwsgi_pass unix://${HOME}/webapps/${APPNAME}/uwsgi.sock;
+        
+        uwsgi_param   X-Forwarded-For     $proxy_add_x_forwarded_for;
+        uwsgi_param   X-Real-IP           $remote_addr;
+        uwsgi_param   X-Forwarded-Host    $host;
+        uwsgi_param   Host                $host;
+        uwsgi_param   HTTP_HOST           $my_host;
 
-        }
+        location ~ "\.pagespeed\.([a-z]\.)?[a-z]{2}\.[^.]{10}\.[^.]+" { add_header "" ""; }
+        location ~ "^/ngx_pagespeed_static/" { }
+        location ~ "^/ngx_pagespeed_beacon$" { }
+        location /ngx_pagespeed_statistics { allow 127.0.0.1; deny all; }
+        location /ngx_pagespeed_message { allow 127.0.0.1; deny all; }
+
+      }
+      
+      #site_media - folder in uri for static files
+      location /static/  {
+        autoindex    off;
+        alias ${HOME}/webapps/${APPNAME}/#{DJANGOPROJECT}/static/;
+      }
+
     }
 }
 EOF
@@ -201,7 +209,7 @@ cp -R baia_dos_piratas/static/* ../baiadospiratas_static/
 
 EOF
 
-chmod +x $HOME/webapps/$DJANGOAPP/update.py
+chmod +x $HOME/webapps/$DJANGOAPP/update.sh
 
 mkdir $HOME/webapps/$APPNAME/lib
 cp -R $HOME/src/python2.7 $HOME/webapps/$APPNAME/lib
