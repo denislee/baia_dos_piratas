@@ -23,7 +23,15 @@ form.submit(function(e) {
 	
 });
 
-var suggestCallBack;
+var suggestCallBack = function (data) {
+    var suggestions = [];
+    $.each(data[1], function(key, val) {
+        suggestions.push({"value":val[0]});
+    });
+    suggestions.length = 5; // prune suggestions list to only 5 items
+    response(suggestions);
+}; 
+
 
 $(document).ready(function () {
     $("#search").autocomplete({
@@ -37,14 +45,7 @@ $(document).ready(function () {
                   "client":"youtube" // force youtube style response, i.e. jsonp
                 }
             );
-            suggestCallBack = function (data) {
-                var suggestions = [];
-                $.each(data[1], function(key, val) {
-                    suggestions.push({"value":val[0]});
-                });
-                suggestions.length = 5; // prune suggestions list to only 5 items
-                response(suggestions);
-            };
+
         },
     });
 });
