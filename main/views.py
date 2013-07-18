@@ -12,9 +12,18 @@ SEARCH_PATERN = '/search/%s/0/7/0'
 TABLE_BEGIN = '<table id="searchResult">'
 TABLE_END = '</table>'
 
+def custom_404(request):
+	return render(request, '404.html', {}, status=404)
+
+
+def custom_500(request):
+	return render(request, '500.html', {}, status=500)
+
+
 def about(request):
 	return render(request, 'main/about.html')
 	
+
 def index(request):
 	if request.method == 'POST' and request.POST.get('q') != '':
 		query = urllib.quote( request.POST.get('q') )
