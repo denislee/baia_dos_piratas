@@ -17,12 +17,3 @@ class MultipleProxyMiddleware(object):
                 if ',' in request.META[field]:
                     parts = request.META[field].split(',')
                     request.META[field] = parts[-1].strip()
-
-
-
-        regex = re.compile('^HTTP_')
-
-        dict((regex.sub('', header), value)
-
-        for (header, value) in request.META.items() if header.startswith('HTTP_')):
-            print header + ': ' + value
