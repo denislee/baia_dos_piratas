@@ -1,11 +1,17 @@
-class WebFactionFixes(object):
-    """Sets 'REMOTE_ADDR' based on 'HTTP_X_FORWARDED_FOR', if the latter is
-    set.
+class MultipleProxyMiddleware(object):
+    FORWARDED_FOR_FIELDS = [
+        'HTTP_X_FORWARDED_FOR',
+        'HTTP_X_FORWARDED_HOST',
+        'HTTP_X_FORWARDED_SERVER',
+    ]
 
-    Based on http://djangosnippets.org/snippets/1706/
-    """
     def process_request(self, request):
-        if 'HTTP_X_FORWARDED_FOR' in request.META:
-            ip = request.META['HTTP_X_FORWARDED_FOR'].split(",")[0].strip()
-            request.META['REMOTE_ADDR'] = ip
-            
+        """
+        Rewrites the proxy headers so that only the most
+        recent proxy is used.
+        """
+        for field in self.FORWARDED_FOR_FIELDS:
+            if field in request.META:
+                if ',' in request.META[field]:
+                    parts = request.META[field].split(',')
+                    request.META[field] = parts[-1].strip()
