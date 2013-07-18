@@ -1,7 +1,5 @@
 
-
-var form = $('#searchForm'),
-    suggestCallBack;
+var form = $('#searchForm');
 
 form.submit(function(e) {
 
@@ -25,6 +23,7 @@ form.submit(function(e) {
 	
 });
 
+var suggestCallBack;
 
 $(document).ready(function () {
     $("#search").autocomplete({
