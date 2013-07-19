@@ -20,12 +20,12 @@ form.submit(function(e) {
 		loading.css('display', 'initial');
 
 	}
-	
+
 });
 
 
-var suggestCallBack;
-
+var suggestCallBack; // global var for autocomplete jsonp
+ 
 $(document).ready(function () {
     $("#search").autocomplete({
         source: function(request, response) {
@@ -38,15 +38,14 @@ $(document).ready(function () {
                   "client":"youtube" // force youtube style response, i.e. jsonp
                 }
             );
-
-          suggestCallBack = function (data) {
-              var suggestions = [];
-              $.each(data[1], function(key, val) {
-                  suggestions.push({"value":val[0]});
-              });
-              suggestions.length = 5; // prune suggestions list to only 5 items
-              response(suggestions);
-          }; 
+            suggestCallBack = function (data) {
+                var suggestions = [];
+                $.each(data[1], function(key, val) {
+                    suggestions.push({"value":val[0]});
+                });
+                suggestions.length = 5; // prune suggestions list to only 5 items
+                response(suggestions);
+            };
         },
     });
 });

@@ -104,7 +104,7 @@ PIPELINE_STORAGE = 'pipeline.storage.PipelineStorage'
 # PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.slimit.SlimItCompressor'
 
 PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.yuglify.YuglifyCompressor'
-PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.yuglify.YuglifyCompressor'
+PIPELINEPELINE_JS_COMPRESSOR = 'pipeline.compressors.yuglify.YuglifyCompressor'
 
 PIPELINE_CSS = {
     'base': {
@@ -119,13 +119,13 @@ PIPELINE_CSS = {
 PIPELINE_JS = {
     'jquery': {
         'source_filenames': (
-            'js/jquery/*.js',
+            'js/nomin/*.js',
         ),
-        'output_filename': 'jquery.js',
+        'output_filename': 'nomin.js',
     },
     'base': {
         'source_filenames': (
-            'js/*.js',
+            'js/min/*.js',
         ),
         'output_filename': 'min.js',
     },
