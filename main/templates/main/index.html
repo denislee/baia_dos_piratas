@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+
 {% load staticfiles %}
 {% block content %}
 
 	<p class="lead">
 		<form method="post" action="{% url 'main' %}" class="well form-search" id="searchForm">
 			{% csrf_token %}
-			<input id="search" type="text" class="input-medium search-query span10" name="q" value="{{ q }}" autocomplete="off">
+			<input id="search" type="text" class="search-query span10" name="q" value="{{ q }}" autocomplete="off">
 			<button type="submit" class="btn">procurar</button>
 		</form>
 	</p>

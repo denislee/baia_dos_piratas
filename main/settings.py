@@ -30,10 +30,7 @@ DATABASES = {
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 USE_X_FORWARDED_HOST = False
 
-ALLOWED_HOSTS = ['bdp.denislee.net', '.denislee.net', \
-    'localhost.localdomain', 'localhost', '127.0.0.1', '10.61.31.82', '108.168.242.154', \
-    '0.0.0.0', '.bdp.denislee.net', '.webfaction.com', '*']
-
+ALLOWED_HOSTS = ['.denislee.net', 'localhost', '127.0.0.1',]
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -131,19 +128,6 @@ PIPELINE_JS = {
     },
 }
 
-
-# PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.yuglify.YuglifyCompressor'
-# PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.yuglify.YuglifyCompressor'
-# PIPELINE_JS = {
-#     'base_scripts': {
-#         'source_filenames': (
-#           'js/main.js',
-#           'js/vote.js',
-#         ),
-#         'output_filename': '/js/min/all.js',
-#     }
-# }
-
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'a44yucl0(4j6^@bj%%)1rw6p3p6tfdmp61u^2e^3_e_ryn)mp4'
 
@@ -164,7 +148,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 
-    # 'webfaction.multipleProxyMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
