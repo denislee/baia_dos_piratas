@@ -27,6 +27,9 @@ form.submit(function(e) {
 var suggestCallBack; // global var for autocomplete jsonp
  
 $(document).ready(function () {
+
+    $("#search").focus();
+ 
     $("#search").autocomplete({
         source: function(request, response) {
             $.getJSON("http://suggestqueries.google.com/complete/search?callback=?",

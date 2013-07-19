@@ -8,7 +8,8 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
 PIRATEBAY_URL = 'http://piratebay.se'
-SEARCH_PATERN = '/search/%s/0/7/0'
+# SEARCH_PATERN = '/search/%s/0/7/0'
+SEARCH_PATERN = '/search/%s/0/7/200'
 TABLE_BEGIN = '<table id="searchResult">'
 TABLE_END = '</table>'
 
