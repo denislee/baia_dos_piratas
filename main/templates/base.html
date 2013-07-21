@@ -42,9 +42,11 @@
       <div class="navbar-inner">
         <div class="container">
           <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            {#
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
+            #}
           </button>
           <a class="brand" href="/">baía dos piratas</a>
           <div class="nav-collapse collapse">
@@ -65,7 +67,7 @@
 
     <!-- Le javascript -->
     <script src="{% static 'js/nomin/jquery.min.js' %}"></script>
-    <script src="{% static 'js/nomin/main.js' %}"></script>
+    {# <script src="{% static 'js/nomin/main.js' %}"></script> #}
     {# {% static 'js/jquery/jquery.min.js' %} #}
     {% compressed_js 'base' %}
 
