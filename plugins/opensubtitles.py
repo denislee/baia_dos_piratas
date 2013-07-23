@@ -21,7 +21,10 @@ def getFirstMovie(query):
 
 def getMovies(query):
 	movies = requests.get(MOVIE_QUERY % query).text
-	data = json.loads(movies)
+	if movies:
+		data = json.loads(movies)
+	else:
+		data = ''
 	return data 
 
 
