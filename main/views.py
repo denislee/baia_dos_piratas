@@ -28,6 +28,9 @@ def index(request):
 		print 'torent 1 name: ' + torrents[0][1]
 		print 'torent 2 name: ' + torrents[1][1]
 
+		print 'torent 1 numb: ' + str( torrents[0][1].find('Uploaded') )
+		print 'torent 2 numb: ' + str( torrents[1][1].find('Uploaded') )
+
 		# checking again
 		if torrents[0][1].find('Uploaded') > 0:
 			newTitle = torrents[0][1]
@@ -36,9 +39,6 @@ def index(request):
 		if torrents[1][1].find('Uploaded') > 0:
 			newTitle = torrents[1][1]
 			torrents[1][1] = newTitle[:newTitle.find('Uploaded')]
-				
-		print 'torrent locate: ' + str()
-		print 'torrent locate: ' + str(torrents[1][1].find('Uploaded'))
 
 		link = subtitle(torrents[0][1], movie['id'])
 		torrents[0].append(link)

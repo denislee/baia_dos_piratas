@@ -16,6 +16,8 @@ def getFirstTorrent(query):
 
 def getTorrents(query):
 	htmlData = requests.get(PIRATEBAY_URL+SEARCH_PATERN.replace('%s',query)).text
+	htmlData = htmlData.replace('\n', '')
+	htmlData = htmlData.replace('\r', '')
 
 	tableData = trimTable(htmlData, TABLE_BEGIN, TABLE_END)
 	soup = BeautifulSoup(tableData)
