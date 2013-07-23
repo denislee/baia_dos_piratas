@@ -47,8 +47,8 @@ def makeList(table):
 			thetext = thetext.replace('\t', '')
 
 			# getting only torrent title
-			if thetext.find('Uploaded') > 0:
-				result[-1].append(thetext[:thetext.find('Uploaded')])
+			if thetext.find('ploaded') > 0:
+				result[-1].append(thetext[:thetext.find('ploaded')-1])
 			else:
 				result[-1].append(thetext)
 
