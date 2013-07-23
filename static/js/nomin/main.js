@@ -17,7 +17,7 @@ form.submit(function(e) {
 
 		alertMsg.text('');
 		q.css('border', '1px solid #ccc');
-		loading.css('display', 'initial');
+		loading.css('display', 'block');
 
 	}
 
