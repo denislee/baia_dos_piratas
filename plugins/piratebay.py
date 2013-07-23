@@ -15,7 +15,7 @@ def getFirstTorrent(query):
 
 def getTorrents(query):
 	htmlData = requests.get(PIRATEBAY_URL+SEARCH_PATERN.replace('%s',query)).text
-	
+
 	htmlData = htmlData.replace('\n', '')
 	htmlData = htmlData.replace('\t', '')
 
@@ -42,6 +42,9 @@ def makeList(table):
 		for col in allcols:
 			thestrings = [unicode(s) for s in col.findAll(text=True)]
 			thetext = ''.join(thestrings)
+
+			thetext = thetext.replace('\n', '')
+			thetext = thetext.replace('\t', '')
 
 			# getting only torrent title
 			if thetext.find('Uploaded') > 0:
