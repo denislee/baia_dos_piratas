@@ -1,16 +1,18 @@
 
 import requests
 import json 
+import difflib
 
 from bs4 import BeautifulSoup
 
-MAIN_URL = 'http://www.opensubtitles.org/'
+MAIN_URL = 'http://www.opensubtitles.org'
 
-MOVIE_QUERY = MAIN_URL + 'libs/suggest.php?format=json3&MovieName=%s&SubLanguageID=null'
-SUBTITLES_QUERY = MAIN_URL + 'en/search/sublanguageid-pob/idmovie-%s'
+MOVIE_QUERY = MAIN_URL + '/libs/suggest.php?format=json3&MovieName=%s&SubLanguageID=null'
+SUBTITLES_QUERY = MAIN_URL + '/en/search/sublanguageid-pob/idmovie-%s'
+SUBTITLE_DOWNLOAD = MAIN_URL + '/en/subtitleserve/sub/%s'
 
 TABLE_BEGIN = '<table id="search_results">'
-TABLE_END = '</table>'
+TABLE_END = '<legend>Download at 25 MBit</legend>'
 
 
 def getFirstMovie(query):
@@ -25,15 +27,7 @@ def getMovies(query):
 
 def getSubtitles(idMovie):
 	htmlData = requests.get(SUBTITLES_QUERY % idMovie).text
-
-	print '--html find --'
-	print htmlData.find(TABLE_BEGIN)
-
 	tableData = trimTable(htmlData, TABLE_BEGIN, TABLE_END)
-
-	print '--table--'
-	print str(tableData) 
-
 	soup = BeautifulSoup(tableData)
 	subtitles = makeList(soup)
 	response = subtitles 
@@ -49,25 +43,52 @@ def trimTable(htmlData, begin, end):
 
 
 def makeList(table):
-	result = []
-	# allrows = table.findAll('tr', limit=3)
-	allrows = table.findAll('tr')
+	subtitles = []
+	allrows = table.findAll('tr', 'change odd expandable')
 	for row in allrows:
-		result.append([])
+
+		subtitles.append([row.get('id').replace('name', '')])
+		subtitles[-1].append(SUBTITLE_DOWNLOAD % row.get('id').replace('name', ''))
+
 		allcols = row.findAll('td')
 		for col in allcols:
 			thestrings = [unicode(s) for s in col.findAll(text=True)]
 			thetext = ''.join(thestrings)
-			result[-1].append(thetext)
-			# print 'col' + str(col)
-			urlTag = col.find('a', 'detLink')
+			thetext = thetext.replace('Download at 25 MBitDownload Subtitles Searcher', '')
+			thetext = thetext.strip()
+
+			title = col.find('span')
+			if bool(title):
+				subtitles[-1].append(title.get('title'))
+			else:
+				title = col.find('a')
+				if bool(thetext) or thetext != '' or thetext == 'None':
+					subtitles[-1].append(thetext)
+				else:
+					subtitles[-1].append('-')
+			urlTag = col.find('a', 'bnone')
 			if urlTag:
-				url = PIRATEBAY_URL+urlTag.get('href')
-				result[-1].append(url)
-			urlTag = col.find('a', title='Download this torrent using magnet')
-			if urlTag:
-				url = urlTag.get('href')
-				result[-1].append(url)
+				url = MAIN_URL+urlTag.get('href')
+				subtitles[-1].append(url)
 				
-	return result
+	return subtitles 
+
+
+def onlyTitles(list):
+	titles = []
+	for item in list:
+		titles.append(item[2])
+	return titles
+
+
+def getLink(torrentTitle, subtitles):
+	titles 			= onlyTitles( subtitles ) 								# getting titles
+	if (len(difflib.get_close_matches( torrentTitle, titles ))):
+		choosenOne 		= difflib.get_close_matches( torrentTitle, titles )[0]	# getting the most similar title
+		subtitleIndex 	= titles.index( choosenOne ) 							# index to get full subtitle lists
+		movieCode 		= subtitles[ subtitleIndex ][0] 						# movie code to construct link
+		link 			= SUBTITLE_DOWNLOAD % movieCode 						# finally, link (:
+	else:
+		link = ''
+	return link
 

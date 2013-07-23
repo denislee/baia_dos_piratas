@@ -5,7 +5,7 @@ import difflib
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
-from plugins.opensubtitles import getFirstMovie
+from plugins.opensubtitles import getFirstMovie, getSubtitles, getLink
 from plugins.piratebay import getTorrents
 
 
@@ -20,11 +20,23 @@ def index(request):
 		print 'query: ' + q
 		movie = getFirstMovie(query)
 		print 'selected movie: ' + str(movie['name'])
+		print 'movie id: ' + str(movie['id'])
 
 		print '--- piratebay ---'
 		print 'query: ' + movie['name'] 
 		torrents = getTorrents(toQuote(movie['name']))
-		#print 'torrents: ' + str(torrents)
+		print 'torent 1 name: ' + torrents[0][1]
+		print 'torent 2 name: ' + torrents[1][1]
+
+		link = subtitle(torrents[0][1], movie['id'])
+		torrents[0].append(link)
+
+		link = subtitle(torrents[1][1], movie['id'])
+		torrents[1].append(link)
+
+		print 'torrent 1 link: ' + str(torrents[0][6])
+		print 'torrent 2 link: ' + str(torrents[1][6])
+
 		print 'torrent 1: ' + str(torrents[0])
 		print 'torrent 2: ' + str(torrents[1])
 
@@ -35,6 +47,12 @@ def index(request):
 
 		return render(request, 'main/index.html', {'torrents': torrents, 'total': len(torrents), 'q': request.POST.get('q')})
 	return render(request, 'main/index.html')
+
+
+def subtitle(torrentTitle, movieId):
+	subtitles = getSubtitles(movieId)
+	link = getLink(torrentTitle, subtitles)
+	return link
 
 
 def toQuote(text):

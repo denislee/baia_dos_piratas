@@ -15,6 +15,10 @@ def getFirstTorrent(query):
 
 def getTorrents(query):
 	htmlData = requests.get(PIRATEBAY_URL+SEARCH_PATERN.replace('%s',query)).text
+	
+	htmlData = htmlData.replace('\n', '')
+	htmlData = htmlData.replace('\t', '')
+
 	tableData = trimTable(htmlData, TABLE_BEGIN, TABLE_END)
 	soup = BeautifulSoup(tableData)
 	torrents = makeList(soup)
@@ -38,15 +42,24 @@ def makeList(table):
 		for col in allcols:
 			thestrings = [unicode(s) for s in col.findAll(text=True)]
 			thetext = ''.join(thestrings)
-			result[-1].append(thetext)
-			# print 'col' + str(col)
+
+			# getting only torrent title
+			if thetext.find('Uploaded') > 0:
+				result[-1].append(thetext[:thetext.find('Uploaded')])
+			else:
+				result[-1].append(thetext)
+
+			# link to details
 			urlTag = col.find('a', 'detLink')
 			if urlTag:
 				url = PIRATEBAY_URL+urlTag.get('href')
 				result[-1].append(url)
+
+			# link to torrent
 			urlTag = col.find('a', title='Download this torrent using magnet')
 			if urlTag:
 				url = urlTag.get('href')
 				result[-1].append(url)
+
 	return result
 

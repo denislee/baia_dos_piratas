@@ -16,25 +16,34 @@
 	{% if torrents %}
 
 		<div class="page-header"></div>	
-		<table class="table table-bordered table-striped">
+		<table class="table table-bordered table-hover">
 		<thead>
 			<tr>
-				<td>tipo</td>
-				<td>nome</td>
-				<td class="span2">detalhes</td>
-				<td class="span2">torrent</td>
-				<td>s</td>
-				<td>l</td>
+				<!-- <td class="span1"></td> -->
+				<td class="span6">nome</td>
+				<td class="span1">detalhes</td>
+				<td class="span1">torrent</td>
+				<td class="span1">legenda</td>
+				<td class="span1">s</td>
+				<td class="span1">l</td>
 			</tr>
 		</thead>
 		<tbody>
 			{% for torrent in torrents %}
 			<tr>
 				{% if torrent %}
-					<td>{{ torrent.0 }}</td>
+					<!-- <td>{{ torrent.0 }}</td> -->
+					<!-- <td><i class="icon-hdd"></i></td> -->
 					<td>{{ torrent.1 }}</td>
-					<td>[ <a href="{{ torrent.2 }}">detalhes</a> ]</td>
-					<td>[ <a href="{{ torrent.3 }}">download</a> ]</td>
+					<td><a href="{{ torrent.2 }}"><span class="badge">detalhes</span></a></td>
+					<td><a href="{{ torrent.3 }}"><span class="badge badge-info">download</span></a></td>
+
+					{% if torrent.6 %}
+						<td><a href="{{ torrent.6 }}"><span class="badge badge-info">download</span></a></td>
+					{% else %}
+						<td><span class="badge">download</span></td>
+					{% endif %}
+
 					<td>{{ torrent.4 }}</td>
 					<td>{{ torrent.5 }}</td>
 				{% endif %}
