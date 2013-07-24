@@ -1,6 +1,4 @@
 import urllib
-import requests
-import difflib
 
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
@@ -15,18 +13,22 @@ def index(request):
 
 	if request.method == 'POST' and q != '':
 
-		query = toQuote( request.POST.get('q') )
+		query = __toQuote(request.POST.get('q'))
 		movies = getMovies(query)
 
 		if movies:
 
 			movie = movies[0] 
-			torrents = getTorrents(toQuote(movie['name']))
+			torrents = getTorrents(__toQuote(movie['name']))
 
-			link = subtitle(torrents[0][1], movie['id'])
+			link = __subtitle(torrents[0][1], 'pob', movie['id'])
+			torrents[0].append(link)
+			link = __subtitle(torrents[0][1], 'eng', movie['id'])
 			torrents[0].append(link)
 
-			link = subtitle(torrents[1][1], movie['id'])
+			link = __subtitle(torrents[1][1], 'pob', movie['id'])
+			torrents[1].append(link)
+			link = __subtitle(torrents[1][1], 'eng', movie['id'])
 			torrents[1].append(link)
 
 			return render(request, 'main/index.html', {'torrents': torrents, 'total': len(torrents), 'q': request.POST.get('q')})
@@ -36,13 +38,13 @@ def index(request):
 	return render(request, 'main/index.html')
 
 
-def subtitle(torrentTitle, movieId):
-	subtitles = getSubtitles(movieId)
+def __subtitle(torrentTitle, language, movieId):
+	subtitles = getSubtitles(language, movieId)
 	link = getLink(torrentTitle, subtitles)
 	return link
 
 
-def toQuote(text):
+def __toQuote(text):
 	return urllib.quote(text)	
 
 

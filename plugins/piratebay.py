@@ -19,21 +19,21 @@ def getTorrents(query):
 	htmlData = htmlData.replace('\n', '')
 	htmlData = htmlData.replace('\r', '')
 
-	tableData = trimTable(htmlData, TABLE_BEGIN, TABLE_END)
+	tableData = __trimTable(htmlData, TABLE_BEGIN, TABLE_END)
 	soup = BeautifulSoup(tableData)
-	torrents = makeList(soup)
+	torrents = __makeList(soup)
 	torrents.remove([]) # remove first empty item
 	return torrents
 
 
-def trimTable(htmlData, begin, end):
+def __trimTable(htmlData, begin, end):
 	tableData = 'not found ):'
 	if (htmlData):
 		tableData = htmlData[htmlData.find(begin):htmlData.find(end)+len(end)]
 	return tableData
 
 
-def makeList(table):
+def __makeList(table):
 	result = []
 	allrows = table.findAll('tr', limit=3)
 	for row in allrows:

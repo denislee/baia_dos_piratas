@@ -23,7 +23,7 @@
 				<td class="span6">nome</td>
 				<td class="span1">detalhes</td>
 				<td class="span1">torrent</td>
-				<td class="span1">legenda</td>
+				<td class="span1">legendas</td>
 				<td class="span1">s</td>
 				<td class="span1">l</td>
 			</tr>
@@ -37,12 +37,19 @@
 					<td>{{ torrent.1 }}</td>
 					<td><a href="{{ torrent.2 }}"><span class="badge">detalhes</span></a></td>
 					<td><a href="{{ torrent.3 }}"><span class="badge badge-info">download</span></a></td>
+					<td>
+						{% if torrent.6 %}
+							<a href="{{ torrent.6 }}"><span class="badge badge-info">pt</span></a>
+						{% else %}
+							<span class="badge">pt</span>
+						{% endif %}
 
-					{% if torrent.6 %}
-						<td><a href="{{ torrent.6 }}"><span class="badge badge-info">download</span></a></td>
-					{% else %}
-						<td><span class="badge">download</span></td>
-					{% endif %}
+						{% if torrent.7 %}
+							<a href="{{ torrent.7 }}"><span class="badge badge-info">en</span></a>
+						{% else %}
+							<span class="badge">en</span>
+						{% endif %}
+					</td>
 
 					<td>{{ torrent.4 }}</td>
 					<td>{{ torrent.5 }}</td>
@@ -55,7 +62,8 @@
 	{% elif total == 0 %}
 
 		<div class="page-header"></div>	
-		xi marquinho. nem encontrei as paradinhas. ): mals.
+		xi marquinho. nem encontrei as paradinhas. ): mals.<br/>
+		(dica: tente escrever o nome do filme em inglês.)
 		
 	{% endif %}
 
