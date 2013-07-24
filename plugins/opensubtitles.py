@@ -2,6 +2,8 @@ import requests
 import json 
 import difflib
 
+from django.http import HttpResponse
+
 from bs4 import BeautifulSoup
 
 MAIN_URL = 'http://www.opensubtitles.org'
@@ -29,6 +31,17 @@ def getMovies(query):
 	else:
 		data = ''
 	return data 
+
+
+# webService sugestion for movies / returns json
+def s(request):
+	q = request.GET.get('q')
+	if request.method == 'GET' and q != '':
+		# movies = 'suggestCallBack(%s)' % requests.get(MOVIE_QUERY % q).text
+		movies = requests.get(MOVIE_QUERY % q).text
+	else:
+		movies = 'erro ):'
+	return HttpResponse(movies, content_type='application/json')
 
 
 def getSubtitles(language, idMovie):
