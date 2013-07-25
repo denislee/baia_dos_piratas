@@ -17,5 +17,5 @@ def index(request):
 
 
 def __toQuote(text):
-	return urllib.quote(text)	
+	return urllib.quote(text.encode('utf8'))	
 

@@ -41,5 +41,5 @@ def __subtitle(torrentTitle, language, movieId):
 
 
 def __toQuote(text):
-	return urllib.quote(text)	
+	return urllib.quote(text.encode('utf8'))	
 
