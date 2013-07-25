@@ -30,8 +30,6 @@ def index(request):
 		torrents[1].append(link)
 
 		return render(request, 'movies/index.html', {'torrents': torrents, 'total': len(torrents), 'q': query})
-		# else:
-			# return render(request, 'movies/index.html', {'total': 0, 'q': request.POST.get('q')})
 
 	return render(request, 'movies/index.html')
 

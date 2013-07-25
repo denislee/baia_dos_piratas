@@ -10,9 +10,9 @@ def index(request):
 	if (q and request.method == 'POST'):
 		query = __toQuote(q)
 		torrents = getAllTorrents(query)
-		return render(request, 'torrent/index.html', {'torrents': torrents, 'total': len(torrents), 'q': query})
+		return render(request, 'torrent/index.html', {'torrents': torrents, 'total': len(torrents), 'q': q})
 	elif (q):
-		return render(request, 'torrent/index.html', {'total': 0, 'q': request.POST.get('q')})
+		return render(request, 'torrent/index.html', {'total': 0, 'q': q})
 	return render(request, 'torrent/index.html')
 
 
