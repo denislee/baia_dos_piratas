@@ -1,51 +1,7 @@
 
 var form = $('#searchForm');
 
-// var container = $('#movieList'),
-// 	containerTemplate = $('#moviesListTemplate'),
-// 	searchBar = $("#search");
-
-// var q = $('.search-query'),
-// 	loading = $('#loading'),
-// 	alertMsg = $('#alertMsg');
-
 form.submit(function(e) {
-
-	// container.hide();
-
-	// $.ajaxSetup ({
-	//     cache: false
-	// });
-
-	// $.get(
-
-	// 	"/s/?q="+escape(searchBar.val()),
-	// 	function(data){
-
-	// 		// parse to add a new field to json. (field to handlebars render image movie.)
-	// 		$.each(data['movies'], function(key, val) {
-	// 			data['movies'][key].picUrl = getImageUrl(val['pic']);
-	// 		});
-
-	// 	    renderJsonToTemplate(container, containerTemplate, data);
-
-	// 		$("tr.movie").click(function(){
-
-	// 			var name = $(this).children('.name').text(),
-	// 				movieId = this.id;
-
-	// 			url = '/?q=' + name + '&movieId=' + movieId;
-
-	// 			alertMsg.text('');
-	// 			q.css('border', '1px solid #ccc');
-	// 			loading.css('display', 'block');
-	// 			location.href=url; // 			container.hide();
-	// 		});
-
-	// 	    container.show();
-	// 	}
-	// );
-
 	e.preventDefault();
 });
 
@@ -91,7 +47,7 @@ $(document).ready(function() {
 						var name = $(this).children('.name').text(),
 							movieId = this.id;
 
-						url = '/?q=' + name + '&movieId=' + movieId;
+						url = '/m/?q=' + name + '&movieId=' + movieId;
 
 						q.css('border', '1px solid #ccc');
 						location.href=url;

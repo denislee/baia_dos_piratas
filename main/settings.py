@@ -155,6 +155,7 @@ INSTALLED_APPS = (
 
     'plugins',
     'torrent',
+    'movies',
     'test',
 )
 

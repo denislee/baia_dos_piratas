@@ -3,7 +3,7 @@
 {% load staticfiles %}
 {% block content %}
 
-	<form method="post" action="{% url 'torrent' %}" class="well form-search" id="searchFormTorrent">
+	<form method="post" action="{% url 'main' %}" class="well form-search" id="searchFormTorrent">
 		{% csrf_token %}
 		<div class="input-append">
 			<input id="searchTorrent" type="text" class="appendedInput span11" name="q" value="{{ q }}" autocomplete="off">
