@@ -3,20 +3,19 @@
 {% load staticfiles %}
 {% block content %}
 
-	<form method="post" action="{% url 'movies' %}" class="well form-search" id="searchForm">
+	<form method="post" action="{% url 'movies' %}" class="well form-search" id="searchFormMovie">
 		{% csrf_token %}
 		<div class="input-append">
-			<input id="search" type="text" class="appendedInput span11" name="q" value="{{ q }}" autocomplete="off">
+			<input id="searchMovie" type="text" class="appendedInput span11" name="q" value="{{ q }}" autocomplete="off">
 			<span class="add-on"><i class="icon-search"></i></span>
 		</div>
 		{# <button type="submit" class="btn">procurar</button> #}
 	</form>
 
-
-	<div id="movieList">
 	<!-- (start) movieList -->
-	<!-- (end) movieList -->
+	<div id="movieList">
 	</div>
+	<!-- (end) movieList -->
 
 	<div id="alertMsg"></div>
 	<img src="http://25.media.tumblr.com/tumblr_m452ysA8601r5pe9fo1_500.gif" width="950" height="395" style="display:none; margin-left: auto; margin-right: auto;" id="loading">

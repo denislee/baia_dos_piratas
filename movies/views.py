@@ -3,7 +3,7 @@ import urllib
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
-from plugins.opensubtitles import getMovies, getSubtitles, getLink
+from plugins.opensubtitles import getSubtitles, getLink
 from plugins.piratebay import getTorrents
 
 
@@ -29,27 +29,11 @@ def index(request):
 		link = __subtitle(torrents[1][1], 'eng', movieId)
 		torrents[1].append(link)
 
-		return render(request, 'main/index.html', {'torrents': torrents, 'total': len(torrents), 'q': query})
+		return render(request, 'movies/index.html', {'torrents': torrents, 'total': len(torrents), 'q': query})
 		# else:
-			# return render(request, 'main/index.html', {'total': 0, 'q': request.POST.get('q')})
+			# return render(request, 'movies/index.html', {'total': 0, 'q': request.POST.get('q')})
 
-	return render(request, 'main/index.html')
-
-
-def about(request):
-	return render(request, 'main/about.html')
-
-
-def test_moviesLayout(request):
-	return render(request, 'main/moviesLayout.html')
-
-
-def custom_404(request):
-	return render(request, '404.html', {}, status=404)
-
-
-def custom_500(request):
-	return render(request, '500.html', {}, status=500)
+	return render(request, 'movies/index.html')
 
 
 def __subtitle(torrentTitle, language, movieId):

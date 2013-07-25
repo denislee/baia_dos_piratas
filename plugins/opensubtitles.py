@@ -20,12 +20,6 @@ TABLE_END = '<legend>Download at 25 MBit</legend>'
 TR_CLASS_PATTERN = 'change odd expandable'
 
 
-def guestMovie(query, movieList):
-	movies = difflib.get_close_matches(query, movieList)
-	getMovies(query)
-	return movie
-
-
 def getMovies(query):
 	movies = requests.get(MOVIE_QUERY % query).text
 	if movies:

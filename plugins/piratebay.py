@@ -16,8 +16,7 @@ def getFirstTorrent(query):
 
 def getTorrents(query):
 	htmlData = requests.get(PIRATEBAY_URL+(SEARCH_PATERN_MOVIE % query)).text
-	htmlData = htmlData.replace('\n', '')
-	htmlData = htmlData.replace('\r', '')
+	htmlData = __cleanHTML(htmlData)
 
 	tableData = __trimTable(htmlData, TABLE_BEGIN, TABLE_END)
 	soup = BeautifulSoup(tableData)
@@ -28,14 +27,20 @@ def getTorrents(query):
 
 def getAllTorrents(query):
 	htmlData = requests.get(PIRATEBAY_URL+(SEARCH_PATERN % query)).text
-	htmlData = htmlData.replace('\n', '')
-	htmlData = htmlData.replace('\r', '')
+	htmlData = __cleanHTML(htmlData)
 
 	tableData = __trimTable(htmlData, TABLE_BEGIN, TABLE_END)
 	soup = BeautifulSoup(tableData)
 	torrents = __makeList(soup, 100, False)
 	torrents.remove([]) # remove first empty item
 	return torrents
+
+
+def __cleanHTML(html):
+	html = html.replace('\n', '')
+	html = html.replace('\r', '')
+	return html
+
 
 
 def __trimTable(htmlData, begin, end):

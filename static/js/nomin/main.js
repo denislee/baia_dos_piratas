@@ -1,5 +1,27 @@
+///////////////////// torrent form
+var formTorrent = $('#searchFormTorrent'),
+		q = $('#searchTorrent'),
+		loading = $('#loading'),
+		alertMsg = $('#alertMsg');
 
-var form = $('#searchForm');
+q.focus();
+
+formTorrent.submit(function(e) {
+
+	if (q.val().length == 0) {
+		alertMsg.text('esquecendo de algo, amigo? :D');
+		q.css('border', '1px solid red');
+		e.preventDefault();
+	} else {
+		alertMsg.text('');
+		q.css('border', '1px solid #ccc');
+		loading.css('display', 'block');
+	}
+});
+
+
+///////////////////// movie form 
+var form = $('#searchFormMovie');
 
 form.submit(function(e) {
 	e.preventDefault();
@@ -10,7 +32,7 @@ $(document).ready(function() {
 
 	var container = $('#movieList'),
 		containerTemplate = $('#moviesListTemplate'),
-		searchBar = $("#search");
+		searchBar = $("#searchMovie");
 
 	var q = $('.search-query'),
 		loading = $('#loading'),
@@ -95,28 +117,4 @@ function getImageUrl(id) {
 	var padId = pad(id,7);
 	return 'http://static' + ((id % 9) + 1) + '.opensubtitles.org/gfx/thumbs/'+ createPath(padId) + "/" + padId + ".jpg";
 }    
-
-
-
-///////////////////// torrent form
-
-var formTorrent = $('#searchFormTorrent'),
-		q = $('#searchTorrent'),
-		loading = $('#loading'),
-		alertMsg = $('#alertMsg');
-
-q.focus();
-
-formTorrent.submit(function(e) {
-
-	if (q.val().length == 0) {
-		alertMsg.text('esquecendo de algo, amigo? :D');
-		q.css('border', '1px solid red');
-		e.preventDefault();
-	} else {
-		alertMsg.text('');
-		q.css('border', '1px solid #ccc');
-		loading.css('display', 'block');
-	}
-});
 
