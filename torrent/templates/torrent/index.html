@@ -6,8 +6,8 @@
 	<form method="post" action="{% url 'main' %}" class="well form-search" id="searchFormTorrent">
 		{% csrf_token %}
 		<div class="input-append">
-			<input id="searchTorrent" type="text" class="appendedInput span11" name="q" value="{{ q }}" autocomplete="off">
-			<span class="add-on"><i class="icon-search"></i></span>
+			<input id="searchTorrent" type="text" class="appendedInput span11" name="q" value="{{ q }}" autocomplete="off" style="height: 26px;font-size: 22px;">
+			<span class="add-on" style="height: 26px;"><i class="icon-search icon-large"></i></span>
 		</div>
 		{# <button type="submit" class="btn">procurar</button> #}
 	</form>
