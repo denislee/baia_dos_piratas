@@ -17,13 +17,6 @@ def index(request):
 
 	if (query and movieId):
 
-		# query = __toQuote(request.POST.get('q'))
-		# movies = getMovies(query)
-		# movie = movies[0] 
-
-		# if movie:
-
-		# torrents = getTorrents(__toQuote(movie['name']))
 		torrents = getTorrents(query)
 
 		link = __subtitle(torrents[0][1], 'pob', movieId)

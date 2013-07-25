@@ -4,8 +4,8 @@ import re
 from bs4 import BeautifulSoup
 
 PIRATEBAY_URL = 'http://piratebay.se'
-# SEARCH_PATERN = '/search/%s/0/7/0' // generic search
-SEARCH_PATERN = '/search/%s/0/7/200'
+SEARCH_PATERN = '/search/%s/0/7/0'
+SEARCH_PATERN_MOVIE = '/search/%s/0/7/200'
 TABLE_BEGIN = '<table id="searchResult">'
 TABLE_END = '</table>'
 
@@ -15,7 +15,19 @@ def getFirstTorrent(query):
 
 
 def getTorrents(query):
-	htmlData = requests.get(PIRATEBAY_URL+SEARCH_PATERN.replace('%s',query)).text
+	htmlData = requests.get(PIRATEBAY_URL+(SEARCH_PATERN_MOVIE % query)).text
+	htmlData = htmlData.replace('\n', '')
+	htmlData = htmlData.replace('\r', '')
+
+	tableData = __trimTable(htmlData, TABLE_BEGIN, TABLE_END)
+	soup = BeautifulSoup(tableData)
+	torrents = __makeList(soup, 3)
+	torrents.remove([]) # remove first empty item
+	return torrents
+
+
+def getAllTorrents(query):
+	htmlData = requests.get(PIRATEBAY_URL+(SEARCH_PATERN_MOVIE % query)).text
 	htmlData = htmlData.replace('\n', '')
 	htmlData = htmlData.replace('\r', '')
 
@@ -33,9 +45,9 @@ def __trimTable(htmlData, begin, end):
 	return tableData
 
 
-def __makeList(table):
+def __makeList(table, limit=100):
 	result = []
-	allrows = table.findAll('tr', limit=3)
+	allrows = table.findAll('tr', limit=limit)
 	for row in allrows:
 		result.append([])
 		allcols = row.findAll('td')

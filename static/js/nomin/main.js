@@ -64,7 +64,7 @@ $(document).ready(function() {
 	searchBar.focus();
 	searchBar.keypress(function(e) {
 
-    if (e.which == 13) {
+    if (e.which == 13 && searchBar.val().length != '') {
 
 		alertMsg.text('');
 		cloudLoading.css('display', 'block');
@@ -139,3 +139,28 @@ function getImageUrl(id) {
 	var padId = pad(id,7);
 	return 'http://static' + ((id % 9) + 1) + '.opensubtitles.org/gfx/thumbs/'+ createPath(padId) + "/" + padId + ".jpg";
 }    
+
+
+
+///////////////////// torrent form
+
+var formTorrent = $('#searchFormTorrent'),
+		q = $('#searchTorrent'),
+		loading = $('#loading'),
+		alertMsg = $('#alertMsg');
+
+q.focus();
+
+formTorrent.submit(function(e) {
+
+	if (q.val().length == 0) {
+		alertMsg.text('esquecendo de algo, amigo? :D');
+		q.css('border', '1px solid red');
+		e.preventDefault();
+	} else {
+		alertMsg.text('');
+		q.css('border', '1px solid #ccc');
+		loading.css('display', 'block');
+	}
+});
+

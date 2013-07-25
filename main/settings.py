@@ -154,6 +154,7 @@ INSTALLED_APPS = (
     'webfaction',
 
     'plugins',
+    'torrent',
     'test',
 )
 
