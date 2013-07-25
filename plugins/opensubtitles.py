@@ -20,8 +20,10 @@ TABLE_END = '<legend>Download at 25 MBit</legend>'
 TR_CLASS_PATTERN = 'change odd expandable'
 
 
-def getFirstMovie(query):
-	return getMovies(query)[0]
+def guestMovie(query, movieList):
+	movies = difflib.get_close_matches(query, movieList)
+	getMovies(query)
+	return movie
 
 
 def getMovies(query):
@@ -39,9 +41,10 @@ def s(request):
 	if request.method == 'GET' and q != '':
 		# movies = 'suggestCallBack(%s)' % requests.get(MOVIE_QUERY % q).text
 		movies = requests.get(MOVIE_QUERY % q).text
+		jsonp = '{"movies":%s}' % movies
 	else:
-		movies = 'erro ):'
-	return HttpResponse(movies, content_type='application/json')
+		jsonp = 'error ):'
+	return HttpResponse(jsonp, content_type='application/json')
 
 
 def getSubtitles(language, idMovie):
@@ -77,10 +80,8 @@ def __makeList(table):
 	subtitles = []
 	allrows = table.findAll('tr', TR_CLASS_PATTERN)
 	for row in allrows:
-
 		subtitles.append([row.get('id').replace('name', '')])
 		subtitles[-1].append(SUBTITLE_DOWNLOAD % row.get('id').replace('name', ''))
-
 		allcols = row.findAll('td')
 		for col in allcols:
 			thestrings = [unicode(s) for s in col.findAll(text=True)]
@@ -101,7 +102,6 @@ def __makeList(table):
 			if urlTag:
 				url = MAIN_URL+urlTag.get('href')
 				subtitles[-1].append(url)
-				
 	return subtitles 
 
 

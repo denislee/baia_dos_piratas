@@ -6,12 +6,49 @@
 	<p class="lead">
 		<form method="post" action="{% url 'main' %}" class="well form-search" id="searchForm">
 			{% csrf_token %}
-			<input id="search" type="text" class="search-query span10" name="q" value="{{ q }}" autocomplete="off">
-			<button type="submit" class="btn">procurar</button>
+			<div class="input-append">
+				<input id="search" type="text" class="appendedInput span11" name="q" value="{{ q }}" autocomplete="off">
+				<span class="add-on"><i class="icon-search"></i></span>
+			</div>
+			{# <button type="submit" class="btn">procurar</button> #}
 		</form>
 	</p>
+
+
+	<div id="movieList">
+	<!-- (start) movieList -->
+	<!-- (end) movieList -->
+	</div>
+
 	<div id="alertMsg"></div>
 	<img src="{% static 'img/loading.gif' %}" style="display:none; margin-left: auto; margin-right: auto;" id="loading">
+
+	<script id="moviesListTemplate" type="text/x-handlebars-template">
+
+		<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<td class="span1">capa</td>
+				<td class="span6">nome</td>
+				<td class="span1">ano</td>
+				<td class="span1">total</td>
+			</tr>
+		</thead>
+		<tbody>
+	{% verbatim %}
+		{{#movies}}
+			<tr class="movie" id="{{id}}" style="cursor: pointer">
+				<td class="span1 pic"><img src="{{picUrl}}" width="71" height="105" alt="{{name}}"/></td>
+				<td class="span6 name">{{name}}</td>
+				<td class="span1 year">{{year}}</td>
+				<td class="span1 total">{{total}}</td>
+			</tr>
+		{{/movies}}
+	{% endverbatim %}
+		</tbody>
+		</table>
+
+	</script>
 
 	{% if torrents %}
 
@@ -63,6 +100,7 @@
 
 		<div class="page-header"></div>	
 		<h3>xi marquinho. nem encontrei as paradinhas. ): mals.</h3>
+		
 		dica: tente escrever o nome do filme <span class="label label-info">em inglês</span> e usar o <span class="label label-info">autocompletar</span>.
 		
 	{% endif %}

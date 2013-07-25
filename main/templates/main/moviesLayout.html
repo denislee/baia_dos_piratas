@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block content %}
+
+	<p class="lead">
+		<form method="post" action="{% url 'main' %}" class="well form-search" id="searchForm">
+			{% csrf_token %}
+			<input id="search" type="text" class="search-query span10" name="q" value="{{ q }}" autocomplete="off">
+			<button type="submit" class="btn">procurar</button>
+		</form>
+	</p>
+	<div id="alertMsg"></div>
+
+	<div id="movieList">
+	<!-- (start) movieList -->
+	<!-- (end) movieList -->
+	</div>
+
+	<img src="{% static 'img/loading.gif' %}" style="display:none; margin-left: auto; margin-right: auto;" id="loading">
+
+	<script id="moviesListTemplate" type="text/x-handlebars-template">
+	{% verbatim %}
+
+		<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<td class="span1">capa</td>
+				<td class="span6">nome</td>
+				<td class="span1">ano</td>
+				<td class="span1">total</td>
+			</tr>
+		</thead>
+		<tbody>
+		{{#movies}}
+			<tr class="movie" id="{{name}}" style="cursor: pointer">
+				<td class="span1"><img src="{{id}}" width="71" height="105" alt="{{name}}"/></td>
+				<td class="span6">{{name}}</td>
+				<td class="span1">{{year}}</td>
+				<td class="span1">{{total}}</td>
+			</tr>
+		{{/movies}}
+		</tbody>
+		</table>
+
+	{% endverbatim %}
+	</script>
+
+{% endblock %}

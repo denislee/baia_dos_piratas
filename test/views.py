@@ -9,8 +9,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.utils.timezone import utc
 
-from plugins.opensubtitles import getFirstMovie 
-from plugins.opensubtitles import getSubtitles 
+# from plugins.opensubtitles import getFirstMovie 
+# from plugins.opensubtitles import getSubtitles 
 
 # URL_MOVIES = 'http://www.opensubtitles.org/libs/suggest.php'
 # LANGUAGE = 'pob'
@@ -24,19 +24,19 @@ TABLE_END = '</table>'
 
 
 def index(request):
-	if request.method == 'POST' and request.POST.get('q') != '':
-		query = urllib.quote( request.POST.get('q') )
+	# if request.method == 'POST' and request.POST.get('q') != '':
+		# query = urllib.quote( request.POST.get('q') )
 
-		movie = getFirstMovie(query)
+		# movie = getFirstMovie(query)
 
-		response = getSubtitles(movie['id'])
+		# response = getSubtitles(movie['id'])
 
 		# json = queryMovieSimple(query)
 		# print 'json : ' + json
 		# host = str(HttpRequest.get_host())
 		# print 'objeto py: ' + json.json()
 
-		return render(request, 'test/index.html', { 'json': response })
+		# return render(request, 'test/index.html', { 'json': response })
 	return render(request, 'test/index.html')
 
 

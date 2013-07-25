@@ -9,33 +9,54 @@ from plugins.piratebay import getTorrents
 
 def index(request):
 
-	q = request.POST.get('q')
+	query = request.GET.get('q')
+	movieId = request.GET.get('movieId')
 
-	if request.method == 'POST' and q != '':
+	print 'query '+ str(query)
+	print 'movieId '+ str(movieId)
 
-		query = __toQuote(request.POST.get('q'))
-		movies = getMovies(query)
+	if (query and movieId):
 
-		if movies:
+		# query = __toQuote(request.POST.get('q'))
+		# movies = getMovies(query)
+		# movie = movies[0] 
 
-			movie = movies[0] 
-			torrents = getTorrents(__toQuote(movie['name']))
+		# if movie:
 
-			link = __subtitle(torrents[0][1], 'pob', movie['id'])
-			torrents[0].append(link)
-			link = __subtitle(torrents[0][1], 'eng', movie['id'])
-			torrents[0].append(link)
+		# torrents = getTorrents(__toQuote(movie['name']))
+		torrents = getTorrents(query)
 
-			link = __subtitle(torrents[1][1], 'pob', movie['id'])
-			torrents[1].append(link)
-			link = __subtitle(torrents[1][1], 'eng', movie['id'])
-			torrents[1].append(link)
+		link = __subtitle(torrents[0][1], 'pob', movieId)
+		torrents[0].append(link)
+		link = __subtitle(torrents[0][1], 'eng', movieId)
+		torrents[0].append(link)
 
-			return render(request, 'main/index.html', {'torrents': torrents, 'total': len(torrents), 'q': request.POST.get('q')})
-		else:
-			return render(request, 'main/index.html', {'total': 0, 'q': request.POST.get('q')})
+		link = __subtitle(torrents[1][1], 'pob', movieId)
+		torrents[1].append(link)
+		link = __subtitle(torrents[1][1], 'eng', movieId)
+		torrents[1].append(link)
+
+		return render(request, 'main/index.html', {'torrents': torrents, 'total': len(torrents), 'q': query})
+		# else:
+			# return render(request, 'main/index.html', {'total': 0, 'q': request.POST.get('q')})
 
 	return render(request, 'main/index.html')
+
+
+def about(request):
+	return render(request, 'main/about.html')
+
+
+def test_moviesLayout(request):
+	return render(request, 'main/moviesLayout.html')
+
+
+def custom_404(request):
+	return render(request, '404.html', {}, status=404)
+
+
+def custom_500(request):
+	return render(request, '500.html', {}, status=500)
 
 
 def __subtitle(torrentTitle, language, movieId):
@@ -46,16 +67,4 @@ def __subtitle(torrentTitle, language, movieId):
 
 def __toQuote(text):
 	return urllib.quote(text)	
-
-
-def about(request):
-	return render(request, 'main/about.html')
-
-
-def custom_404(request):
-	return render(request, '404.html', {}, status=404)
-
-
-def custom_500(request):
-	return render(request, '500.html', {}, status=500)
 

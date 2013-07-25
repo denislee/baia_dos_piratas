@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('',
 	url(r'^about/$', 'main.views.about', name='about'),
+	url(r'^l/$', 'main.views.test_moviesLayout', name='moviesLayout'),
 	url(r'^s/$', 'plugins.opensubtitles.s', name='suggestions'),
 	url(r'^test/$', 'test.views.index', name='test'),
 	url(r'^$', 'main.views.index', name='main'),
