@@ -3,16 +3,14 @@
 {% load staticfiles %}
 {% block content %}
 
-	<p class="lead">
-		<form method="post" action="{% url 'main' %}" class="well form-search" id="searchForm">
-			{% csrf_token %}
-			<div class="input-append">
-				<input id="search" type="text" class="appendedInput span11" name="q" value="{{ q }}" autocomplete="off">
-				<span class="add-on"><i class="icon-search"></i></span>
-			</div>
-			{# <button type="submit" class="btn">procurar</button> #}
-		</form>
-	</p>
+	<form method="post" action="{% url 'main' %}" class="well form-search" id="searchForm">
+		{% csrf_token %}
+		<div class="input-append">
+			<input id="search" type="text" class="appendedInput span11" name="q" value="{{ q }}" autocomplete="off">
+			<span class="add-on"><i class="icon-search"></i></span>
+		</div>
+		{# <button type="submit" class="btn">procurar</button> #}
+	</form>
 
 
 	<div id="movieList">
@@ -21,8 +19,8 @@
 	</div>
 
 	<div id="alertMsg"></div>
-	<img src="http://25.media.tumblr.com/3f52e72cfccbd0b507661d61b63a9ac0/tumblr_mernenap0p1rka6l9o1_500.gif" style="display:none; margin-left: auto; margin-right: auto;" id="loading">
-	<img src="http://s2.favim.com/orig/28/cute-gif-kawaii-Favim.com-230959.gif" style="display:none; margin-left: auto; margin-right: auto;" id="cloudLoading">
+	<img src="http://25.media.tumblr.com/tumblr_m452ysA8601r5pe9fo1_500.gif" width="950" height="395" style="display:none; margin-left: auto; margin-right: auto;" id="loading">
+	<img src="http://images.4chan.org/wsg/src/1374705537316.gif" width="954" height="531" style="display:none; margin-left: auto; margin-right: auto;" id="cloudLoading">
 
 	<script id="moviesListTemplate" type="text/x-handlebars-template">
 
