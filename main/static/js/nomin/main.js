@@ -39,8 +39,7 @@ form.submit(function(e) {
 	// 			alertMsg.text('');
 	// 			q.css('border', '1px solid #ccc');
 	// 			loading.css('display', 'block');
-	// 			location.href=url;
-	// 			container.hide();
+	// 			location.href=url; // 			container.hide();
 	// 		});
 
 	// 	    container.show();
@@ -59,13 +58,16 @@ $(document).ready(function() {
 
 	var q = $('.search-query'),
 		loading = $('#loading'),
+		cloudLoading = $('#cloudLoading'),
 		alertMsg = $('#alertMsg');
 
 	searchBar.focus();
 	searchBar.keypress(function(e) {
 
-    if(e.which == 13) {
+    if (e.which == 13) {
 
+		alertMsg.text('');
+		cloudLoading.css('display', 'block');
 		container.hide();
 
 		$.ajaxSetup ({
@@ -76,34 +78,39 @@ $(document).ready(function() {
 			"/s/?q="+escape(searchBar.val()),
 			function(data){
 
-				// parse to add a new field to json. (field to handlebars render image movie.)
-				$.each(data['movies'], function(key, val) {
-					data['movies'][key].picUrl = getImageUrl(val['pic']);
-				});
+				if (data) {
+					// parse to add a new field to json. (field to handlebars render image movie.)
+					$.each(data['movies'], function(key, val) {
+						data['movies'][key].picUrl = getImageUrl(val['pic']);
+					});
 
-			    renderJsonToTemplate(container, containerTemplate, data);
+				    renderJsonToTemplate(container, containerTemplate, data);
 
-				$("tr.movie").click(function(){
+					$("tr.movie").click(function(){
 
-					var name = $(this).children('.name').text(),
-						movieId = this.id;
+						var name = $(this).children('.name').text(),
+							movieId = this.id;
 
-					url = '/?q=' + name + '&movieId=' + movieId;
+						url = '/?q=' + name + '&movieId=' + movieId;
 
-					alertMsg.text('');
-					q.css('border', '1px solid #ccc');
-					loading.css('display', 'block');
-					location.href=url;
-					container.hide();
-				});
+						q.css('border', '1px solid #ccc');
+						location.href=url;
 
-			    container.show();
+						loading.css('display', 'block');
+						container.hide();
+					});
+
+					cloudLoading.css('display', 'none');
+				    container.show();
+				}
+
 			}
-		);
+		).fail(function() { 
+			cloudLoading.css('display', 'none');
+			alertMsg.text('):');
+		});
 	}
-
 	});
-
 });
 
 

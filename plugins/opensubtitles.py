@@ -41,9 +41,12 @@ def s(request):
 	if request.method == 'GET' and q != '':
 		# movies = 'suggestCallBack(%s)' % requests.get(MOVIE_QUERY % q).text
 		movies = requests.get(MOVIE_QUERY % q).text
-		jsonp = '{"movies":%s}' % movies
+		if movies:
+			jsonp = '{"movies":%s}' % movies
+		else:
+			jsonp = ''
 	else:
-		jsonp = 'error ):'
+		jsonp = ''
 	return HttpResponse(jsonp, content_type='application/json')
 
 
