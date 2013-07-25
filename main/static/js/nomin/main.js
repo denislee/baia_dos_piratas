@@ -1,21 +1,52 @@
 
 var form = $('#searchForm');
 
-form.submit(function(e) {
-	var q = $('.search-query'),
-		loading = $('#loading'),
-		alertMsg = $('#alertMsg');
+// var container = $('#movieList'),
+// 	containerTemplate = $('#moviesListTemplate'),
+// 	searchBar = $("#search");
 
-	// if (q.val().length == 0) {
-	// 	alertMsg.text('esquecendo de algo, amigo? :D');
-	// 	q.css('border', '1px solid red');
-	// 	// e.preventDefault();
-	// } else {
-	// 	alertMsg.text('');
-	// 	q.css('border', '1px solid #ccc');
-	// 	loading.css('display', 'block');
-	// }
-	// aways prevent to send, because he needs to choose by ajax request below.
+// var q = $('.search-query'),
+// 	loading = $('#loading'),
+// 	alertMsg = $('#alertMsg');
+
+form.submit(function(e) {
+
+	// container.hide();
+
+	// $.ajaxSetup ({
+	//     cache: false
+	// });
+
+	// $.get(
+
+	// 	"/s/?q="+escape(searchBar.val()),
+	// 	function(data){
+
+	// 		// parse to add a new field to json. (field to handlebars render image movie.)
+	// 		$.each(data['movies'], function(key, val) {
+	// 			data['movies'][key].picUrl = getImageUrl(val['pic']);
+	// 		});
+
+	// 	    renderJsonToTemplate(container, containerTemplate, data);
+
+	// 		$("tr.movie").click(function(){
+
+	// 			var name = $(this).children('.name').text(),
+	// 				movieId = this.id;
+
+	// 			url = '/?q=' + name + '&movieId=' + movieId;
+
+	// 			alertMsg.text('');
+	// 			q.css('border', '1px solid #ccc');
+	// 			loading.css('display', 'block');
+	// 			location.href=url;
+	// 			container.hide();
+	// 		});
+
+	// 	    container.show();
+	// 	}
+	// );
+
 	e.preventDefault();
 });
 
@@ -31,7 +62,9 @@ $(document).ready(function() {
 		alertMsg = $('#alertMsg');
 
 	searchBar.focus();
-	searchBar.on('input', function(e) {
+	searchBar.keypress(function(e) {
+
+    if(e.which == 13) {
 
 		container.hide();
 
@@ -67,6 +100,7 @@ $(document).ready(function() {
 			    container.show();
 			}
 		);
+	}
 
 	});
 
