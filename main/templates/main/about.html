@@ -12,7 +12,24 @@
 
 	<p>Você que está cansando de ver as propagandas que cercam o piratebay, esse é o lugar certo. Aqui ele mostra apenas os resultados dos torrents (roubados do piratebay) sem propagandas e organizados pelo o maior número de seeders. Isso é bem prático para quem não sabe usar torrent e acaba clicando em alguma propaganda acidentalmente ou para aqueles que estão cansados das propagandas.</p>
 
-	<p>Em desenvolvimento. (:</p>
+	<p>(:</p>
+
+	<p class="muted" style="display:none; margin-left: auto; margin-right: auto;">
+	Funcionamento:
+
+	normal: navegador -> meu servidor -> piratebay -> meu servidor -> navegador
+	filmes: navegador -> meu servidor -> opensubtitles -> piratebay -> opensubtitles -> navegador
+
+	Criei duas "API"s, uma para o piratebay e outra para o opensubtitles. O piratebay em si não possui nenhuma nativa e por isso eu tive que criar algo (meio pedreiro) que interpreta o html que retorna ao fazer uma request para o site deles. Já o opensubtitles possui uma API, mas é controlada e super chata de ser usada, por isso eu acabei escolhendo por fazer um parse (porco) no html deles (da mesma forma que eu faço com o piratebay).
+
+	Existem duas etapas para a escolha de filmes:
+	1. Listagem dos filmes
+	2. Listagem dos torrents e das legendas.
+
+	Na primeira etapa ele faz uma requisição ajax roubada do autocomplete do opensubtitles.
+	Na segunda etapa ele pega a string título do filme e faz a pesquisa no piratebay e no opensubtitles.Aí é só comparar os títulos dos resultados dos dois e colocar os mais semelhantes. Fim.
+	</p>
+
 </p>
 
 {% endblock %}
