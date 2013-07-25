@@ -21,7 +21,9 @@ def getTorrents(query):
 	tableData = __trimTable(htmlData, TABLE_BEGIN, TABLE_END)
 	soup = BeautifulSoup(tableData)
 	torrents = __makeList(soup, 3)
-	torrents.remove([]) # remove first empty item
+	
+	if torrents:
+		torrents.remove([]) # remove first empty item
 	return torrents
 
 
@@ -32,7 +34,9 @@ def getAllTorrents(query):
 	tableData = __trimTable(htmlData, TABLE_BEGIN, TABLE_END)
 	soup = BeautifulSoup(tableData)
 	torrents = __makeList(soup, 100, False)
-	torrents.remove([]) # remove first empty item
+
+	if torrents:
+		torrents.remove([]) # remove first empty item
 	return torrents
 
 

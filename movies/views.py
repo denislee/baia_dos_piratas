@@ -12,8 +12,8 @@ def index(request):
 	query = request.GET.get('q')
 	movieId = request.GET.get('movieId')
 
-	print 'query '+ str(query)
-	print 'movieId '+ str(movieId)
+	# print 'query '+ str(query)
+	# print 'movieId '+ str(movieId)
 
 	if (query and movieId):
 
