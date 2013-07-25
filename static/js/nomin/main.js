@@ -31,7 +31,7 @@ $(document).ready(function() {
 		alertMsg = $('#alertMsg');
 
 	searchBar.focus();
-	searchBar.keyup(function(e) {
+	searchBar.on('input', function(e) {
 
 		container.hide();
 
