@@ -27,7 +27,7 @@ def getTorrents(query):
 
 
 def getAllTorrents(query):
-	htmlData = requests.get(PIRATEBAY_URL+(SEARCH_PATERN_MOVIE % query)).text
+	htmlData = requests.get(PIRATEBAY_URL+(SEARCH_PATERN % query)).text
 	htmlData = htmlData.replace('\n', '')
 	htmlData = htmlData.replace('\r', '')
 
