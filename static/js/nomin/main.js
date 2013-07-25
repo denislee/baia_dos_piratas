@@ -35,6 +35,10 @@ $(document).ready(function() {
 
 		container.hide();
 
+		$.ajaxSetup ({
+		    cache: false
+		});
+
 		$.get(
 			"/s/?q="+escape(searchBar.val()),
 			function(data){
