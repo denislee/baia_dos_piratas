@@ -33,7 +33,7 @@ def getAllTorrents(query):
 
 	tableData = __trimTable(htmlData, TABLE_BEGIN, TABLE_END)
 	soup = BeautifulSoup(tableData)
-	torrents = __makeList(soup)
+	torrents = __makeList(soup, 100, False)
 	torrents.remove([]) # remove first empty item
 	return torrents
 
@@ -45,7 +45,7 @@ def __trimTable(htmlData, begin, end):
 	return tableData
 
 
-def __makeList(table, limit=100):
+def __makeList(table, limit=100, shortName=True):
 	result = []
 	allrows = table.findAll('tr', limit=limit)
 	for row in allrows:
@@ -59,7 +59,7 @@ def __makeList(table, limit=100):
 			thestrings = regex.sub('', str(thestrings))
 
 			# getting only torrent title
-			if thetext.find('Uploaded') > 0:
+			if thetext.find('Uploaded') > 0 and shortName:
 				result[-1].append(thetext[:thetext.find('Uploaded')])
 			else:
 				result[-1].append(thetext)
