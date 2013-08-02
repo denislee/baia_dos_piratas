@@ -19,17 +19,21 @@ def index(request):
 
 		torrents = getTorrents(query)
 
-		link = __subtitle(torrents[0][1], 'pob', movieId)
-		torrents[0].append(link)
-		link = __subtitle(torrents[0][1], 'eng', movieId)
-		torrents[0].append(link)
+		if torrents:
 
-		link = __subtitle(torrents[1][1], 'pob', movieId)
-		torrents[1].append(link)
-		link = __subtitle(torrents[1][1], 'eng', movieId)
-		torrents[1].append(link)
+			link = __subtitle(torrents[0][1], 'pob', movieId)
+			torrents[0].append(link)
+			link = __subtitle(torrents[0][1], 'eng', movieId)
+			torrents[0].append(link)
 
-		return render(request, 'movies/index.html', {'torrents': torrents, 'total': len(torrents), 'q': query})
+			link = __subtitle(torrents[1][1], 'pob', movieId)
+			torrents[1].append(link)
+			link = __subtitle(torrents[1][1], 'eng', movieId)
+			torrents[1].append(link)
+
+			return render(request, 'movies/index.html', {'torrents': torrents, 'total': len(torrents), 'q': query})
+		else:
+			return render(request, 'movies/index.html', {'total': 0, 'q': query})
 
 	return render(request, 'movies/index.html')
 

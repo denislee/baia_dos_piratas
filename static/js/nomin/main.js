@@ -85,7 +85,7 @@ $(document).ready(function() {
 			}
 		).fail(function() { 
 			cloudLoading.css('display', 'none');
-			alertMsg.text('):');
+			alertMsg.text('poxa, não consegui encontrar nada mesmo. tente escrever menos que eu vou lhe dar algumas sugestões. (;');
 		});
 	}
 	});
